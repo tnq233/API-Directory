@@ -13,8 +13,8 @@ body{font-family:system-ui;text-align:center;margin-top:40px;color:#333}
 <p>如果长时间无响应：<span id="fallback"></span></p>
 <script>
 (async ()=>{
-  // 注意：如果你的仓库名字不是根仓库，修改这里！
-  const repoName = "API Directory";
+  // 仓库名：是 API-Directory，不是 API Directory
+  const repoName = "API-Directory";
   let base = location.pathname.startsWith(`/${repoName}/`) ? `/${repoName}/` : "/";
   let slug = location.pathname.replace(base,"").replace(/\//g,"");
   if(!slug){
