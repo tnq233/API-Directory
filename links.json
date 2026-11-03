@@ -1,20 +1,44 @@
 [
   {
-    "name": "空霜",
+    "category": "最新加入",
+    "name": "空霜付费站",
     "desc": "（签到0.01-0.10）",
     "url": "https://catcold.top/register?aff=YVAMHN6AUK22",
-    "icon": "🍦"
+    "icon": "🧊"
   },
   {
+    "category": "最新加入",
+    "name": "zoo",
+    "desc": "（0.1-1左右）\n太子0.08/次，拉三人0.04/次",
+    "url": "https://zooapi.gfkfqtcx.com/sign-up?aff=M1Zp",
+    "icon": "🦁"
+  },
+  {
+    "category": "小r优选",
     "name": "空霜",
     "desc": "（同家公益站，付费站充值20可以吃公益站的克分组）",
     "url": "https://api.catcold.top/sign-up?aff=I3FL",
     "icon": "🍧"
   },
   {
-    "name": "zoo",
-    "desc": "（0.1-1左右）\n太子0.08/次，拉三人0.04/次",
-    "url": "https://zooapi.gfkfqtcx.com/sign-up?aff=M1Zp",
-    "icon": "🦁"
+    "category": "无门槛签到",
+    "name": "测试站点A",
+    "desc": "（无门槛随便签到）",
+    "url": "https://example.com",
+    "icon": "🍰"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "测试站点B",
+    "desc": "（需要充值才能签到）",
+    "url": "https://example.com",
+    "icon": "🍩"
+  },
+  {
+    "category": "无签到",
+    "name": "测试站点C",
+    "desc": "（纯公益无签到）",
+    "url": "https://example.com",
+    "icon": "🍓"
   }
 ]
