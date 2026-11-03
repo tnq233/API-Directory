@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>跳转中</title>
+<style>
+body{font-family:system-ui;text-align:center;margin-top:40px;color:#333}
+</style>
+</head>
+<body>
+<p>正在跳转……</p>
+<p>如果长时间无响应：<span id="fallback"></span></p>
+<script>
+(async ()=>{
+  // 注意：如果你的仓库名字不是根仓库，修改这里！
+  const repoName = "API Directory";
+  let base = location.pathname.startsWith(`/${repoName}/`) ? `/${repoName}/` : "/";
+  let slug = location.pathname.replace(base,"").replace(/\//g,"");
+  if(!slug){
+    document.body.innerHTML = "<p>这是短链首页，请带上后缀访问</p>";
+    return;
+  }
+  try{
+    const res = await fetch(`${base}links.json`);
+    const map = await res.json();
+    if(map[slug]){
+      location.replace(map[slug]);
+    }else{
+      document.body.innerHTML = `<p>❌ 该短链不存在</p>`;
+    }
+  }catch(e){
+    document.body.innerHTML = `<p>读取链接配置失败</p>`;
+  }
+})()
+</script>
+</body>
+</html>
