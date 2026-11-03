@@ -10,27 +10,40 @@ body{font-family:system-ui;text-align:center;margin-top:40px;color:#333}
 </head>
 <body>
 <p>正在跳转……</p>
-<p>如果长时间无响应：<span id="fallback"></span></p>
+<p id="debug"></p>
 <script>
 (async ()=>{
-  // 仓库名：是 API-Directory，不是 API Directory
-  const repoName = "API-Directory";
-  let base = location.pathname.startsWith(`/${repoName}/`) ? `/${repoName}/` : "/";
-  let slug = location.pathname.replace(base,"").replace(/\//g,"");
-  if(!slug){
-    document.body.innerHTML = "<p>这是短链首页，请带上后缀访问</p>";
-    return;
-  }
-  try{
-    const res = await fetch(`${base}links.json`);
-    const map = await res.json();
-    if(map[slug]){
-      location.replace(map[slug]);
-    }else{
-      document.body.innerHTML = `<p>❌ 该短链不存在</p>`;
+  const debug = (s) => document.getElementById("debug").innerText += s + "\n";
+  try {
+    // 拿到路径，去掉前缀
+    const path = location.pathname;
+    // 仓库固定前缀
+    const prefix = "/API-Directory/";
+    let slug;
+    if (path.startsWith(prefix)) {
+      slug = path.slice(prefix.length).replace(/\//g, "");
+    } else {
+      slug = path.replace(/\//g, "");
     }
-  }catch(e){
-    document.body.innerHTML = `<p>读取链接配置失败</p>`;
+
+    debug("slug: " + slug);
+    if (!slug) {
+      document.body.innerHTML = "<p>这是短链首页，请带上后缀访问</p>";
+      return;
+    }
+
+    // 相对地址，直接拉同目录下的 links.json
+    const res = await fetch("./links.json");
+    if (!res.ok) throw new Error("fetch 返回非 200");
+    const map = await res.json();
+    debug("读取成功");
+    if (map[slug]) {
+      location.replace(map[slug]);
+    } else {
+      document.body.innerHTML = `<p>❌ 短链「${slug}」不存在</p>`;
+    }
+  } catch (err) {
+    document.body.innerHTML = `<p>读取链接配置失败<br/>错误：${err.message}</p>`;
   }
 })()
 </script>
