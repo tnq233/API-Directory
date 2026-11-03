@@ -12,19 +12,18 @@
             padding: 0;
         }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            /* 天空背景图，如果加载不出可以使用后备颜色 */
-            background: url('img/mmexport1793733959765.jpg') no-repeat center center fixed;
+            /* 这里保留你的粉色云海背景，如果是相对路径，直接改下面括号里的内容即可 */
+            background: url('img/你的背景图名字.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-color: #e0c3fc; 
+            background-color: #e0c3fc; /* 后备背景色 */
             color: #333;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         }
 
-        /* 主容器 */
         .container {
             width: 100%;
             max-width: 480px;
@@ -32,6 +31,7 @@
             flex-direction: column;
             align-items: center;
             padding-top: 30px;
+            padding-bottom: 50px;
         }
 
         /* 顶部头像 */
@@ -44,48 +44,91 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 40px;
             margin-bottom: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             backdrop-filter: blur(5px);
+            overflow: hidden;
+        }
+        .header-avatar img {
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
         }
 
-        /* 标题和副标题 */
         h1 {
             color: #fff;
             font-size: 22px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
             margin-bottom: 5px;
             letter-spacing: 1px;
         }
         .subtitle {
             color: #fff;
             font-size: 13px;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
             margin-bottom: 30px;
             opacity: 0.9;
         }
 
-        /* 链接列表 */
+        /* 分组容器 */
+        .category-group {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        /* 分组标题（点击展开/收起） */
+        .category-title {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            cursor: pointer;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            user-select: none;
+        }
+        .category-title::before, .category-title::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+            margin: 0 15px;
+        }
+        .category-title .arrow {
+            font-size: 12px;
+            margin-left: 8px;
+            transition: transform 0.3s;
+        }
+        .category-title.collapsed .arrow {
+            transform: rotate(-90deg);
+        }
+
+        /* 链接列表（默认展开，折叠时隐藏） */
         .link-list {
             list-style: none;
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 15px; /* 卡片间距 */
+            gap: 15px; 
+            transition: all 0.3s ease;
+        }
+        .link-list.hidden {
+            display: none;
         }
 
-        /* 核心：毛玻璃卡片 */
+        /* 核心：毛玻璃卡片 (修改了透明度，磨砂感减弱) */
         .link-item a {
             display: flex;
             align-items: center;
-            padding: 12px 20px 12px 12px;
-            /* 毛玻璃效果的关键代码 */
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1.5px solid rgba(255, 255, 255, 0.7);
-            border-radius: 50px; /* 大圆角 */
+            padding: 15px 20px 15px 15px;
+            /* 这里的 0.25 决定了透明度，数字越小越透明（背景越透） */
+            background: rgba(255, 255, 255, 0.25);
+            /* 这里的 blur 从 12px 改成了 8px，磨砂质感变弱 */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50px; 
             text-decoration: none;
             color: #333;
             transition: all 0.3s ease;
@@ -93,7 +136,7 @@
         }
 
         .link-item a:hover {
-            background: rgba(255, 255, 255, 0.65);
+            background: rgba(255, 255, 255, 0.4);
             transform: translateY(-2px);
             box-shadow: 0 6px 16px rgba(0,0,0,0.1);
         }
@@ -104,7 +147,7 @@
             height: 45px;
             min-width: 45px;
             border-radius: 50%;
-            background: #fff;
+            background: rgba(255, 255, 255, 0.6);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -113,52 +156,42 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.05);
             overflow: hidden;
         }
-        
-        /* 如果使用了图片作为图标 */
         .icon-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
 
-        /* 文字区域 */
+        /* 文字区域（实现名字一行，介绍下一行，全部居中） */
         .text-box {
             flex-grow: 1;
+            display: flex;
+            flex-direction: column;
             text-align: center;
-            padding-right: 20px; /* 为了视觉居中，减去右边的占位 */
+            padding-right: 25px; /* 给右侧三点留出空间，保证居中 */
         }
 
         .link-name {
             font-size: 16px;
             font-weight: 600;
-            display: inline;
+            margin-bottom: 4px;
         }
 
         .link-desc {
-            font-size: 14px;
+            font-size: 13px;
             color: #444;
-            display: inline;
             line-height: 1.4;
         }
 
-        /* 如果介绍有换行，强制居中 */
-        .link-desc br {
-            display: block;
-            content: "";
-            margin-top: 2px;
-        }
-
-        /* 右侧的小三点图标 (纯 CSS 绘制) */
+        /* 右侧的小三点图标 */
         .more-dots {
             color: #666;
             font-size: 20px;
             font-weight: bold;
-            letter-spacing: 1px;
             line-height: 1;
             padding-bottom: 8px;
         }
 
-        /* 加载提示 */
         .loading {
             text-align: center;
             color: #fff;
@@ -169,57 +202,90 @@
 <body>
 
 <div class="container">
-    <!-- 顶部头像 -->
-    <div class="header-avatar" style="padding: 0; overflow: hidden;">
-    <img src="img/mmexport1793734398403.jpg" alt="头像" style="width: 100%; height: 100%; object-fit: cover;">
+    <div class="header-avatar">
+        <img src="img/你的女孩头像名字.jpg" alt="头像">
     </div>
     <h1>api站点合集</h1>
     <div class="subtitle">各种站点持续更新中~</div>
 
-    <!-- 列表 -->
-    <ul class="link-list" id="linkList">
-        <li class="loading">加载中...</li>
-    </ul>
+    <div id="mainContainer">
+        <div class="loading">加载中...</div>
+    </div>
 </div>
 
 <script>
     fetch('links.json')
         .then(response => response.json())
         .then(data => {
-            const listElement = document.getElementById('linkList');
-            listElement.innerHTML = ''; 
+            const container = document.getElementById('mainContainer');
+            container.innerHTML = ''; 
 
+            // 1. 按 category 分组
+            const groupedData = {};
             data.forEach(item => {
-                const li = document.createElement('li');
-                li.className = 'link-item';
-                
-                // 处理换行符 \n 转换为 <br>
-                const formattedDesc = item.desc.replace(/\n/g, '<br>');
-                
-                // 检查 icon 是链接还是 emoji
-                let iconHtml = '';
-                if (item.icon && item.icon.startsWith('http')) {
-                    iconHtml = `<img src="${item.icon}" alt="icon">`;
-                } else {
-                    iconHtml = item.icon || '🔗'; // 默认图标
+                const cat = item.category || '未分类';
+                if (!groupedData[cat]) {
+                    groupedData[cat] = [];
                 }
-
-                li.innerHTML = `
-                    <a href="${item.url}" target="_blank" rel="noopener noreferrer">
-                        <div class="icon-box">${iconHtml}</div>
-                        <div class="text-box">
-                            <span class="link-name">${item.name}</span>
-                            <span class="link-desc">${formattedDesc}</span>
-                        </div>
-                        <div class="more-dots">⋮</div>
-                    </a>
-                `;
-                listElement.appendChild(li);
+                groupedData[cat].push(item);
             });
+
+            // 2. 遍历分组并生成 HTML
+            for (const category in groupedData) {
+                const groupDiv = document.createElement('div');
+                groupDiv.className = 'category-group';
+
+                // 分组标题
+                const titleDiv = document.createElement('div');
+                titleDiv.className = 'category-title';
+                titleDiv.innerHTML = `<span>${category}</span><span class="arrow">▼</span>`;
+                
+                // 列表容器
+                const ul = document.createElement('ul');
+                ul.className = 'link-list';
+
+                // 点击标题展开/折叠逻辑
+                titleDiv.onclick = function() {
+                    ul.classList.toggle('hidden');
+                    titleDiv.classList.toggle('collapsed');
+                };
+
+                // 渲染组内链接
+                groupedData[category].forEach(item => {
+                    const li = document.createElement('li');
+                    li.className = 'link-item';
+                    
+                    const formattedDesc = item.desc.replace(/\n/g, '<br>');
+                    
+                    let iconHtml = '';
+                    if (item.icon && item.icon.startsWith('http')) {
+                        iconHtml = `<img src="${item.icon}" alt="icon">`;
+                    } else {
+                        iconHtml = item.icon || '🔗';
+                    }
+
+                    // 这里的结构改为了上下两行
+                    li.innerHTML = `
+                        <a href="${item.url}" target="_blank" rel="noopener noreferrer">
+                            <div class="icon-box">${iconHtml}</div>
+                            <div class="text-box">
+                                <span class="link-name">${item.name}</span>
+                                <span class="link-desc">${formattedDesc}</span>
+                            </div>
+                            <div class="more-dots">⋮</div>
+                        </a>
+                    `;
+                    ul.appendChild(li);
+                });
+
+                groupDiv.appendChild(titleDiv);
+                groupDiv.appendChild(ul);
+                container.appendChild(groupDiv);
+            }
         })
         .catch(error => {
             console.error('Error:', error);
-            document.getElementById('linkList').innerHTML = '<li class="loading">数据加载失败，请检查 links.json</li>';
+            document.getElementById('mainContainer').innerHTML = '<div class="loading">数据加载失败，请检查 links.json 格式</div>';
         });
 </script>
 
