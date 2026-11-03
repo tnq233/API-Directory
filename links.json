@@ -1,6 +1,20 @@
-{
-  "a": "https://example.com/aaa",
-  "b": "https://example.com/bbb",
-  "c": "https://example.com/ccc",
-  "ks": "https://catcold.top/register?aff=YVAMHN6AUK22"
-}
+[
+  {
+    "name": "空霜",
+    "desc": "（签到0.01-0.10）",
+    "url": "https://catcold.top/register?aff=YVAMHN6AUK22",
+    "icon": "🍦"
+  },
+  {
+    "name": "空霜",
+    "desc": "（同家公益站，付费站充值20可以吃公益站的克分组）",
+    "url": "https://api.catcold.top/sign-up?aff=I3FL",
+    "icon": "🍧"
+  },
+  {
+    "name": "zoo",
+    "desc": "（0.1-1左右）\n太子0.08/次，拉三人0.04/次",
+    "url": "https://zooapi.gfkfqtcx.com/sign-up?aff=M1Zp",
+    "icon": "🦁"
+  }
+]
