@@ -12,10 +12,10 @@
             padding: 0;
         }
         body {
-            /* 这里保留你的粉色云海背景，如果是相对路径，直接改下面括号里的内容即可 */
+            /* 你的粉色云海背景 */
             background: url('img/mmexport1793733959765.jpg') no-repeat center center fixed;
             background-size: cover;
-            background-color: #e0c3fc; /* 后备背景色 */
+            background-color: #e0c3fc; 
             color: #333;
             min-height: 100vh;
             display: flex;
@@ -66,11 +66,96 @@
             color: #fff;
             font-size: 13px;
             text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             opacity: 0.9;
         }
 
-        /* 分组容器 */
+        /* ================= 新增：搜索框 ================= */
+        .search-container {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        .search-box {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 50px;
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: #333;
+            font-size: 14px;
+            outline: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .search-box::placeholder {
+            color: #555;
+        }
+        .search-box:focus {
+            background: rgba(255, 255, 255, 0.5);
+            border-color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* ================= 新增：公告栏 ================= */
+        .announcement-wrapper {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .announcement-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            color: #333;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        .announcement-title:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+        .announcement-title .arrow {
+            font-size: 14px;
+            transition: transform 0.3s;
+        }
+        .announcement-title.active .arrow {
+            transform: rotate(180deg);
+        }
+        /* 公告内容面板 */
+        .announcement-content {
+            display: none; /* 默认隐藏 */
+            margin-top: 10px;
+            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #333;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            white-space: pre-wrap; /* 支持换行 */
+        }
+        .announcement-content.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ================= 分组容器 ================= */
         .category-group {
             width: 100%;
             margin-bottom: 20px;
@@ -104,7 +189,7 @@
             transform: rotate(-90deg);
         }
 
-        /* 链接列表（默认展开，折叠时隐藏） */
+        /* 链接列表 */
         .link-list {
             list-style: none;
             width: 100%;
@@ -117,14 +202,12 @@
             display: none;
         }
 
-        /* 核心：毛玻璃卡片 (修改了透明度，磨砂感减弱) */
+        /* 核心：毛玻璃卡片 */
         .link-item a {
             display: flex;
             align-items: center;
             padding: 15px 20px 15px 15px;
-            /* 这里的 0.25 决定了透明度，数字越小越透明（背景越透） */
             background: rgba(255, 255, 255, 0.10);
-            /* 这里的 blur 从 12px 改成了 8px，磨砂质感变弱 */
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1.5px solid rgba(255, 255, 255, 0.5);
@@ -162,13 +245,13 @@
             object-fit: cover;
         }
 
-        /* 文字区域（实现名字一行，介绍下一行，全部居中） */
+        /* 文字区域 */
         .text-box {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             text-align: center;
-            padding-right: 25px; /* 给右侧三点留出空间，保证居中 */
+            padding-right: 25px;
         }
 
         .link-name {
@@ -197,6 +280,11 @@
             color: #fff;
             text-shadow: 0 1px 3px rgba(0,0,0,0.2);
         }
+        
+        /* 隐藏元素 */
+        .d-none {
+            display: none !important;
+        }
     </style>
 </head>
 <body>
@@ -208,85 +296,143 @@
     <h1>api站点合集</h1>
     <div class="subtitle">各种站点持续更新中~</div>
 
+    <!-- 1. 搜索框 -->
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜索站点名称或介绍...">
+    </div>
+
+    <!-- 2. 公告栏 -->
+    <div class="announcement-wrapper">
+        <div class="announcement-title" id="announcementBtn">
+            <span>📢 站点公告</span>
+            <span class="arrow">▼</span>
+        </div>
+        <!-- 如果需要在公告里换行，请使用 <br> 标签 -->
+        <div class="announcement-content" id="announcementContent">
+            欢迎来到 API 站点合集！<br>
+            本页面所有内容均来自网络收集，请自行甄别。<br>
+            如有问题或需要更新链接，请联系管理员。
+        </div>
+    </div>
+
     <div id="mainContainer">
         <div class="loading">加载中...</div>
     </div>
 </div>
 
 <script>
+    // 原始数据存这里，方便搜索时过滤
+    let originalData = [];
+
+    // 初始化：获取数据并渲染
     fetch('links.json')
         .then(response => response.json())
         .then(data => {
-            const container = document.getElementById('mainContainer');
-            container.innerHTML = ''; 
-
-            // 1. 按 category 分组
-            const groupedData = {};
-            data.forEach(item => {
-                const cat = item.category || '未分类';
-                if (!groupedData[cat]) {
-                    groupedData[cat] = [];
-                }
-                groupedData[cat].push(item);
-            });
-
-            // 2. 遍历分组并生成 HTML
-            for (const category in groupedData) {
-                const groupDiv = document.createElement('div');
-                groupDiv.className = 'category-group';
-
-                // 分组标题
-                const titleDiv = document.createElement('div');
-                titleDiv.className = 'category-title';
-                titleDiv.innerHTML = `<span>${category}</span><span class="arrow">▼</span>`;
-                
-                // 列表容器
-                const ul = document.createElement('ul');
-                ul.className = 'link-list';
-
-                // 点击标题展开/折叠逻辑
-                titleDiv.onclick = function() {
-                    ul.classList.toggle('hidden');
-                    titleDiv.classList.toggle('collapsed');
-                };
-
-                // 渲染组内链接
-                groupedData[category].forEach(item => {
-                    const li = document.createElement('li');
-                    li.className = 'link-item';
-                    
-                    const formattedDesc = item.desc.replace(/\n/g, '<br>');
-                    
-                    let iconHtml = '';
-                    if (item.icon && item.icon.startsWith('http')) {
-                        iconHtml = `<img src="${item.icon}" alt="icon">`;
-                    } else {
-                        iconHtml = item.icon || '🔗';
-                    }
-
-                    // 这里的结构改为了上下两行
-                    li.innerHTML = `
-                        <a href="${item.url}" target="_blank" rel="noopener noreferrer">
-                            <div class="icon-box">${iconHtml}</div>
-                            <div class="text-box">
-                                <span class="link-name">${item.name}</span>
-                                <span class="link-desc">${formattedDesc}</span>
-                            </div>
-                            <div class="more-dots">⋮</div>
-                        </a>
-                    `;
-                    ul.appendChild(li);
-                });
-
-                groupDiv.appendChild(titleDiv);
-                groupDiv.appendChild(ul);
-                container.appendChild(groupDiv);
-            }
+            originalData = data;
+            renderData(originalData);
+            setupAnnouncement();
         })
         .catch(error => {
             console.error('Error:', error);
             document.getElementById('mainContainer').innerHTML = '<div class="loading">数据加载失败，请检查 links.json 格式</div>';
         });
+
+    // 渲染页面的核心函数
+    function renderData(dataToRender) {
+        const container = document.getElementById('mainContainer');
+        container.innerHTML = ''; 
+
+        if (dataToRender.length === 0) {
+            container.innerHTML = '<div class="loading" style="margin-top:20px;">没有找到匹配的链接~</div>';
+            return;
+        }
+
+        // 按 category 分组
+        const groupedData = {};
+        dataToRender.forEach(item => {
+            const cat = item.category || '未分类';
+            if (!groupedData[cat]) {
+                groupedData[cat] = [];
+            }
+            groupedData[cat].push(item);
+        });
+
+        // 遍历分组并生成 HTML
+        for (const category in groupedData) {
+            const groupDiv = document.createElement('div');
+            groupDiv.className = 'category-group';
+
+            // 判断默认展开条件（如果是搜索状态，全部展开）
+            const isSearching = document.getElementById('searchInput').value.trim() !== '';
+            const isDefaultExpanded = isSearching || (category === '最新加入' || category === '小r优选');
+            
+            const titleDiv = document.createElement('div');
+            titleDiv.className = isDefaultExpanded ? 'category-title' : 'category-title collapsed';
+            titleDiv.innerHTML = `<span>${category}</span><span class="arrow">▼</span>`;
+            
+            const ul = document.createElement('ul');
+            ul.className = isDefaultExpanded ? 'link-list' : 'link-list hidden'; 
+            groupDiv.style.marginBottom = isDefaultExpanded ? '20px' : '10px';
+
+            // 点击标题折叠逻辑
+            titleDiv.onclick = function() {
+                ul.classList.toggle('hidden');
+                titleDiv.classList.toggle('collapsed');
+                groupDiv.style.marginBottom = ul.classList.contains('hidden') ? '10px' : '20px';
+            };
+
+            // 渲染组内链接
+            groupedData[category].forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'link-item';
+                
+                const formattedDesc = item.desc.replace(/\n/g, '<br>');
+                let iconHtml = item.icon && item.icon.startsWith('http') ? `<img src="${item.icon}" alt="icon">` : (item.icon || '🔗');
+
+                li.innerHTML = `
+                    <a href="${item.url}" target="_blank" rel="noopener noreferrer">
+                        <div class="icon-box">${iconHtml}</div>
+                        <div class="text-box">
+                            <span class="link-name">${item.name}</span>
+                            <span class="link-desc">${formattedDesc}</span>
+                        </div>
+                        <div class="more-dots">⋮</div>
+                    </a>
+                `;
+                ul.appendChild(li);
+            });
+
+            groupDiv.appendChild(titleDiv);
+            groupDiv.appendChild(ul);
+            container.appendChild(groupDiv);
+        }
+    }
+
+    // ================= 搜索功能 =================
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', function(e) {
+        const keyword = e.target.value.toLowerCase().trim();
+        
+        // 过滤数据（匹配名字或描述）
+        const filteredData = originalData.filter(item => {
+            return item.name.toLowerCase().includes(keyword) || 
+                   (item.desc && item.desc.toLowerCase().includes(keyword));
+        });
+
+        // 重新渲染
+        renderData(filteredData);
+    });
+
+    // ================= 公告栏功能 =================
+    function setupAnnouncement() {
+        const annBtn = document.getElementById('announcementBtn');
+        const annContent = document.getElementById('announcementContent');
+
+        annBtn.addEventListener('click', function() {
+            annContent.classList.toggle('show');
+            annBtn.classList.toggle('active');
+        });
+    }
 </script>
 
 </body>
