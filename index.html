@@ -189,11 +189,8 @@
         .link-item a {
             display: flex;
             align-items: center;
-            padding: 15px 20px 15px 15px;
-            
-            /* 方案五微光：给背景加了一点点很微弱的右侧渐变，增加质感 */
+            padding: 15px;
             background: linear-gradient(to right, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.20));
-            
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1.5px solid rgba(255, 255, 255, 0.5);
@@ -202,9 +199,6 @@
             color: #333;
             transition: all 0.3s ease;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            
-            /* 关键：为了让右侧图标绝对定位生效 */
-            position: relative; 
         }
 
         .link-item a:hover {
@@ -213,7 +207,7 @@
             box-shadow: 0 6px 16px rgba(0,0,0,0.1);
         }
 
-        /* 图标容器 */
+        /* 左侧图标容器 */
         .icon-box {
             width: 45px;
             height: 45px;
@@ -227,7 +221,6 @@
             font-size: 24px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.05);
             overflow: hidden;
-            z-index: 1;
         }
         .icon-box img {
             width: 100%;
@@ -235,15 +228,14 @@
             object-fit: cover;
         }
 
-        /* 文字区域 - 修复居中问题 */
+        /* 文字区域 */
         .text-box {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             text-align: center;
-            /* 移除了之前导致偏右的 padding-right，让文字水平绝对居中 */
-            padding: 0 10px; 
-            z-index: 1;
+            /* 左右留一点点 padding，避免文字太长贴边 */
+            padding: 0 5px; 
         }
 
         .link-name {
@@ -258,16 +250,13 @@
             line-height: 1.4;
         }
 
-        /* 新增：右侧悬浮小图标 */
-        .right-icon {
-            position: absolute;
-            right: 20px; /* 距离右边的距离 */
-            top: 50%;
-            transform: translateY(-50%); /* 垂直居中 */
-            font-size: 18px;
-            opacity: 0.85;
-            pointer-events: none; /* 防止遮挡点击事件 */
-            text-shadow: 0 1px 2px rgba(0,0,0,0.1); /* 给 emoji 加一点微弱的阴影，更立体 */
+        /* 右侧隐形占位块：宽度和左侧图标+间距完全一样，保证文字绝对居中 */
+        .spacer-box {
+            width: 45px;
+            min-width: 45px;
+            margin-left: 15px; 
+            height: 1px; 
+            visibility: hidden;
         }
 
         .loading {
@@ -292,12 +281,10 @@
     <h1>api站点合集</h1>
     <div class="subtitle">各种站点持续更新中~</div>
 
-    <!-- 1. 搜索框 -->
     <div class="search-container">
         <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜索站点名称或介绍...">
     </div>
 
-    <!-- 2. 公告栏 -->
     <div class="announcement-wrapper">
         <div class="announcement-title" id="announcementBtn">
             <span>📢 站点公告</span>
@@ -374,21 +361,6 @@
                 const formattedDesc = item.desc.replace(/\n/g, '<br>');
                 let iconHtml = item.icon && item.icon.startsWith('http') ? `<img src="${item.icon}" alt="icon">` : (item.icon || '🔗');
 
-                // ================= 核心逻辑：根据分组决定右侧图标 =================
-                let rightIcon = '';
-                if (category === '小r优选') {
-                    rightIcon = '❤️'; // 红色爱心
-                } else if (category === '最新加入' || category === '无门槛签到') {
-                    rightIcon = '✨'; // 小星星
-                } else if (category === '有门槛签到') {
-                    rightIcon = '🔑'; // 钥匙
-                } else if (category === '无签到') {
-                    rightIcon = '🔒'; // 锁
-                }
-
-                // 如果有图标，才渲染右侧的 div
-                const rightIconHtml = rightIcon ? `<div class="right-icon">${rightIcon}</div>` : '';
-
                 li.innerHTML = `
                     <a href="${item.url}" target="_blank" rel="noopener noreferrer">
                         <div class="icon-box">${iconHtml}</div>
@@ -396,7 +368,7 @@
                             <span class="link-name">${item.name}</span>
                             <span class="link-desc">${formattedDesc}</span>
                         </div>
-                        ${rightIconHtml} <!-- 插入右侧图标 -->
+                        <div class="spacer-box"></div> <!-- 隐形占位，保证文字绝对居中 -->
                     </a>
                 `;
                 ul.appendChild(li);
