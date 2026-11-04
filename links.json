@@ -1,10 +1,17 @@
 [
   {
     "category": "最新加入",
-    "name": "空霜付费站",
+    "name": "空霜",
     "desc": "（签到0.01-0.10）",
     "url": "https://catcold.top/register?aff=YVAMHN6AUK22",
     "icon": "🧊"
+  },
+  {
+    "category": "最新加入",
+    "name": "空霜",
+    "desc": "（同家公益站，付费站充值20可以吃公益站的克分组）",
+    "url": "https://api.catcold.top/sign-up?aff=I3FL",
+    "icon": "🍧"
   },
   {
     "category": "最新加入",
@@ -14,31 +21,66 @@
     "icon": "🦁"
   },
   {
-    "category": "小r优选",
-    "name": "空霜",
-    "desc": "（同家公益站，付费站充值20可以吃公益站的克分组）",
-    "url": "https://api.catcold.top/sign-up?aff=I3FL",
-    "icon": "🍧"
+    "category": "最新加入",
+    "name": "modelmq",
+    "desc": "（签到0.001）",
+    "url": "https://modelmq.top/sign-up?aff=NcKj",
+    "icon": "📡"
   },
   {
-    "category": "无门槛签到",
-    "name": "测试站点A",
-    "desc": "（无门槛随便签到）",
-    "url": "https://example.com",
+    "category": "最新加入",
+    "name": "Vc",
+    "desc": "（0.65左右）\n赠金可在克的福利分组使用",
+    "url": "https://sub.vcnovb.cn/register?aff=7STQSP4K75C4",
+    "icon": "💎"
+  },
+  {
+    "category": "最新加入",
+    "name": "梨叙",
+    "desc": "（试吃0.5）",
+    "url": "https://api.xrl.org.cn/sign-up?aff=s6uT",
     "icon": "🍰"
   },
   {
-    "category": "有门槛签到",
-    "name": "测试站点B",
-    "desc": "（需要充值才能签到）",
-    "url": "https://example.com",
+    "category": "最新加入",
+    "name": "AnAn",
+    "desc": "（试吃0.5）",
+    "url": "https://api.waianan.com/sign-up?aff=v5eQ",
     "icon": "🍩"
   },
   {
-    "category": "无签到",
-    "name": "测试站点C",
-    "desc": "（纯公益无签到）",
-    "url": "https://example.com",
-    "icon": "🍓"
+    "category": "最新加入",
+    "name": "rbubu",
+    "desc": "（试吃0.5）",
+    "url": "https://api.rbubu.com/sign-up?aff=T2w2",
+    "icon": "🧁"
+  },
+  {
+    "category": "最新加入",
+    "name": "秋刀鱼",
+    "desc": "（试吃2.5）",
+    "url": "https://qiudaoy.com/sign-up?aff=KPs2",
+    "icon": "🐟"
+  },
+  {
+    "category": "最新加入",
+    "name": "长春叙",
+    "desc": "（0.3左右）",
+    "url": "https://changchunxu.xyz/sign-up?aff=rprs",
+    "icon": "🌸"
+  },
+  {
+    "category": "最新加入",
+    "name": "月栖",
+    "desc": "（前日调用可签到）",
+    "url": "https://yueqiai.top/sign-up?aff=ZYu2",
+    "icon": "🌙"
+  },
+  {
+    "category": "最新加入",
+    "name": "EazyData API",
+    "desc": "（试吃50，后续上签到，有抽奖）",
+    "url": "https://eazydata.org/sign-up?aff=Kb21",
+    "icon": "🎁"
   }
 ]
