@@ -82,5 +82,40 @@
     "desc": "（试吃50，后续上签到，有抽奖）",
     "url": "https://eazydata.org/sign-up?aff=Kb21",
     "icon": "🎁"
+  },
+  {
+    "category": "小r优选",
+    "name": "奇异果",
+    "desc": "（前日调用10次可签到）\n❤️anti逆向按次opus4.6",
+    "url": "https://api.qiyiguo.uk/sign-up?aff=QVNC",
+    "icon": "🥝"
+  },
+  {
+    "category": "小r优选",
+    "name": "晚晚舟",
+    "desc": "（邀10人/20r解锁签到）\n❤️0.05反重力",
+    "url": "https://wanwanzhou.top/register?aff=BZ4KH8ANL3S6",
+    "icon": "⛵"
+  },
+  {
+    "category": "小r优选",
+    "name": "NodeX",
+    "desc": "（0.1左右）",
+    "url": "https://nodexapi.it.com/sign-up?aff=WEYC",
+    "icon": "🕸️"
+  },
+  {
+    "category": "小r优选",
+    "name": "织云",
+    "desc": "（20以内）",
+    "url": "https://zhiyunapi.cc/register?aff=mEgq",
+    "icon": "☁️"
+  },
+  {
+    "category": "小r优选",
+    "name": "星期五",
+    "desc": "（5r解锁签到）",
+    "url": "https://api.fri5.top/sign-up?aff=Arhm",
+    "icon": "🎉"
   }
 ]
