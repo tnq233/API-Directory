@@ -117,5 +117,131 @@
     "desc": "（5r解锁签到）",
     "url": "https://api.fri5.top/sign-up?aff=Arhm",
     "icon": "🎉"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "狐狐",
+    "desc": "（0.03r+5次调用可签到）",
+    "url": "https://api3.neonfox.top/sign-up?aff=GQpD",
+    "icon": "🦊"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "livelove",
+    "desc": "（10r/邀5人解锁签到）",
+    "url": "https://livelove.dev/register?aff=Y4MTT9SLTEES",
+    "icon": "💖"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "小雨",
+    "desc": "（前日调用可签到）",
+    "url": "https://mixed.strai.life/sign-up?aff=ae6E",
+    "icon": "🌧️"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "幸运午餐",
+    "desc": "（前日调用可签到）",
+    "url": "https://luckylunch.cc/register?aff=OQLU",
+    "icon": "🍱"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "玖时",
+    "desc": "（2r+3次调用可签到）",
+    "url": "https://api-cf.jiushi.xin/register?aff=SZwT",
+    "icon": "⏳"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "ovo API",
+    "desc": "（前日调用可签到）",
+    "url": "https://hk.ovoapi.cn/sign-up?aff=IPj0",
+    "icon": "🐣"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "千岛",
+    "desc": "（前日调用可签到）",
+    "url": "https://api2.qiandao.mom/sign-up?aff=yPE8",
+    "icon": "🏝️"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "火喵喵",
+    "desc": "（前日调用可签到）",
+    "url": "https://ai.dianhuomao.shop/sign-up?aff=th83",
+    "icon": "🔥"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "prime",
+    "desc": "（5r可签到）",
+    "url": "https://www.primerelay.online/register?aff=Y5AYED38TGT8",
+    "icon": "⭐"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "小流云",
+    "desc": "（前日调用可签到）",
+    "url": "https://ai.xlyun.pro/sign-up?aff=5qFS",
+    "icon": "💨"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "克克",
+    "desc": "（充值+调用可签到）",
+    "url": "https://api.kekeaittt.com/sign-up?aff=NVqa",
+    "icon": "🍫"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "宅恋",
+    "desc": "（前日调用可签到）",
+    "url": "https://az.zlapi.vip/register?aff=n0Hi",
+    "icon": "🏠"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "剑阁",
+    "desc": "（调用5次可签到）",
+    "url": "https://www.jiangeyun.xyz/register?aff=M9GZDM2TFZ7R",
+    "icon": "⚔️"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "飞光",
+    "desc": "（30r解锁签到）",
+    "url": "https://taleapi.asia/sign-up?aff=Wx33",
+    "icon": "🌠"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "好梦",
+    "desc": "（前日调用可签到）",
+    "url": "https://goodreamapi.online/register?aff=vXjm",
+    "icon": "💤"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "蓝天",
+    "desc": "（plus/vip可签到）",
+    "url": "https://api.wasdv.top/sign-up?aff=DNgO",
+    "icon": "🌤️"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "慧慧云",
+    "desc": "（5r/邀5人解锁签到）",
+    "url": "https://api.huihuiyun.top/register?aff=YTDVQ4YYNHRS",
+    "icon": "☁️"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "玖观api",
+    "desc": "（10r解锁签到）",
+    "url": "https://jiuguan.cloud/sign-up?aff=U2lP",
+    "icon": "🏯"
   }
 ]
