@@ -1,404 +1,807 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API 站点合集</title>
-    <style>
-        /* 基础设置 */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            background: url('img/mmexport1793733959765.jpg') no-repeat center center fixed;
-            background-size: cover;
-            background-color: #e0c3fc; 
-            color: #333;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            padding: 20px;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 480px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 30px;
-            padding-bottom: 50px;
-        }
-
-        /* 顶部头像 */
-        .header-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            backdrop-filter: blur(5px);
-            overflow: hidden;
-        }
-        .header-avatar img {
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover;
-        }
-
-        h1 {
-            color: #fff;
-            font-size: 22px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-        }
-        .subtitle {
-            color: #fff;
-            font-size: 13px;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            margin-bottom: 20px;
-            opacity: 0.9;
-        }
-
-        /* ================= 搜索框 ================= */
-        .search-container {
-            width: 100%;
-            margin-bottom: 15px;
-        }
-        .search-box {
-            width: 100%;
-            padding: 12px 20px;
-            border-radius: 50px;
-            border: 1.5px solid rgba(255, 255, 255, 0.6);
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: #333;
-            font-size: 14px;
-            outline: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-        .search-box::placeholder { color: #555; }
-        .search-box:focus {
-            background: rgba(255, 255, 255, 0.5);
-            border-color: rgba(255, 255, 255, 0.9);
-        }
-
-        /* ================= 公告栏 ================= */
-        .announcement-wrapper {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-        .announcement-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1.5px solid rgba(255, 255, 255, 0.6);
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 15px;
-            color: #333;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: all 0.3s ease;
-        }
-        .announcement-title:hover { background: rgba(255, 255, 255, 0.6); }
-        .announcement-title .arrow {
-            font-size: 14px;
-            transition: transform 0.3s;
-        }
-        .announcement-title.active .arrow { transform: rotate(180deg); }
-        
-        .announcement-content {
-            display: none;
-            margin-top: 10px;
-            padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1.5px solid rgba(255, 255, 255, 0.5);
-            border-radius: 20px;
-            font-size: 13px;
-            line-height: 1.6;
-            color: #333;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            white-space: pre-wrap; 
-        }
-        .announcement-content.show {
-            display: block;
-            animation: fadeInDown 0.3s ease forwards;
-        }
-
-        /* ================= 分组容器与动画 ================= */
-        .category-group {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
-        .category-title {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            cursor: pointer;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-            user-select: none;
-        }
-        
-        .category-title .arrow {
-            font-size: 12px;
-            margin-left: 8px;
-            transition: transform 0.3s ease;
-        }
-        .category-title.collapsed .arrow {
-            transform: rotate(-90deg);
-        }
-
-        .link-list {
-            list-style: none;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 12px; 
-        }
-        .link-list.hidden {
-            display: none;
-        }
-        .link-list:not(.hidden) {
-            animation: fadeInDown 0.3s ease forwards;
-        }
-
-        /* ================= 核心：毛玻璃卡片 ================= */
-        .link-item a {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.20));
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1.5px solid rgba(255, 255, 255, 0.5);
-            border-radius: 50px; 
-            text-decoration: none;
-            color: #333;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        .link-item a:hover {
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.5));
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-        }
-
-        /* 左侧图标容器 */
-        .icon-box {
-            width: 45px;
-            height: 45px;
-            min-width: 45px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 15px;
-            font-size: 24px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
-        .icon-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* 文字区域 */
-        .text-box {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-            /* 左右留一点点 padding，避免文字太长贴边 */
-            padding: 0 5px; 
-        }
-
-        .link-name {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .link-desc {
-            font-size: 13px;
-            color: #444;
-            line-height: 1.4;
-        }
-
-        /* 右侧隐形占位块：宽度和左侧图标+间距完全一样，保证文字绝对居中 */
-        .spacer-box {
-            width: 45px;
-            min-width: 45px;
-            margin-left: 15px; 
-            height: 1px; 
-            visibility: hidden;
-        }
-
-        .loading {
-            text-align: center;
-            color: #fff;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-
-        /* ================= 关键动画帧 ================= */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <div class="header-avatar">
-        <img src="img/mmexport1793734398403.jpg" alt="头像">
-    </div>
-    <h1>api站点合集</h1>
-    <div class="subtitle">各种站点持续更新中~</div>
-
-    <div class="search-container">
-        <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜索站点名称或介绍...">
-    </div>
-
-    <div class="announcement-wrapper">
-        <div class="announcement-title" id="announcementBtn">
-            <span>📢 站点公告</span>
-            <span class="arrow">▼</span>
-        </div>
-        <div class="announcement-content" id="announcementContent">
-            欢迎来到 API 站点合集！<br>
-            本页面所有内容均来自本人收集，试吃或签到有可能不准确，以实际情况为准。<br>
-            如有问题或需要更新链接，请联系本人。
-        </div>
-    </div>
-
-    <div id="mainContainer">
-        <div class="loading">加载中...</div>
-    </div>
-</div>
-
-<script>
-    let originalData = [];
-
-    fetch('links.json')
-        .then(response => response.json())
-        .then(data => {
-            originalData = data;
-            renderData(originalData);
-            setupAnnouncement();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            document.getElementById('mainContainer').innerHTML = '<div class="loading">数据加载失败，请检查 links.json 格式</div>';
-        });
-
-    function renderData(dataToRender) {
-        const container = document.getElementById('mainContainer');
-        container.innerHTML = ''; 
-
-        if (dataToRender.length === 0) {
-            container.innerHTML = '<div class="loading" style="margin-top:20px;">没有找到匹配的链接~</div>';
-            return;
-        }
-
-        const groupedData = {};
-        dataToRender.forEach(item => {
-            const cat = item.category || '未分类';
-            if (!groupedData[cat]) { groupedData[cat] = []; }
-            groupedData[cat].push(item);
-        });
-
-        for (const category in groupedData) {
-            const groupDiv = document.createElement('div');
-            groupDiv.className = 'category-group';
-
-            const isSearching = document.getElementById('searchInput').value.trim() !== '';
-            const isDefaultExpanded = isSearching || (category === '最新加入' || category === '小r优选');
-            
-            const titleDiv = document.createElement('div');
-            titleDiv.className = isDefaultExpanded ? 'category-title' : 'category-title collapsed';
-            titleDiv.innerHTML = `<span>${category}</span><span class="arrow">▼</span>`;
-            
-            const ul = document.createElement('ul');
-            ul.className = isDefaultExpanded ? 'link-list' : 'link-list hidden'; 
-            groupDiv.style.marginBottom = isDefaultExpanded ? '20px' : '10px';
-
-            titleDiv.onclick = function() {
-                ul.classList.toggle('hidden');
-                titleDiv.classList.toggle('collapsed');
-                groupDiv.style.marginBottom = ul.classList.contains('hidden') ? '10px' : '20px';
-            };
-
-            groupedData[category].forEach(item => {
-                const li = document.createElement('li');
-                li.className = 'link-item';
-                
-                const formattedDesc = item.desc.replace(/\n/g, '<br>');
-                let iconHtml = item.icon && item.icon.startsWith('http') ? `<img src="${item.icon}" alt="icon">` : (item.icon || '🔗');
-
-                li.innerHTML = `
-                    <a href="${item.url}" target="_blank" rel="noopener noreferrer">
-                        <div class="icon-box">${iconHtml}</div>
-                        <div class="text-box">
-                            <span class="link-name">${item.name}</span>
-                            <span class="link-desc">${formattedDesc}</span>
-                        </div>
-                        <div class="spacer-box"></div> <!-- 隐形占位，保证文字绝对居中 -->
-                    </a>
-                `;
-                ul.appendChild(li);
-            });
-
-            groupDiv.appendChild(titleDiv);
-            groupDiv.appendChild(ul);
-            container.appendChild(groupDiv);
-        }
-    }
-
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', function(e) {
-        const keyword = e.target.value.toLowerCase().trim();
-        const filteredData = originalData.filter(item => {
-            return item.name.toLowerCase().includes(keyword) || 
-                   (item.desc && item.desc.toLowerCase().includes(keyword));
-        });
-        renderData(filteredData);
-    });
-
-    function setupAnnouncement() {
-        const annBtn = document.getElementById('announcementBtn');
-        const annContent = document.getElementById('announcementContent');
-        annBtn.addEventListener('click', function() {
-            annContent.classList.toggle('show');
-            annBtn.classList.toggle('active');
-        });
-    }
-</script>
-
-</body>
-</html>
+[
+  {
+    "category": "最新加入",
+    "name": "空霜",
+    "desc": "（签到0.01-0.10）",
+    "url": "https://catcold.top/register?aff=YVAMHN6AUK22",
+    "icon": "🧊"
+  },
+  {
+    "category": "最新加入",
+    "name": "空霜",
+    "desc": "（同家公益站，付费站充值20可以吃公益站的克分组）",
+    "url": "https://api.catcold.top/sign-up?aff=I3FL",
+    "icon": "🍧"
+  },
+  {
+    "category": "最新加入",
+    "name": "zoo",
+    "desc": "（0.1-1左右）\n太子0.08/次，拉三人0.04/次",
+    "url": "https://zooapi.gfkfqtcx.com/sign-up?aff=M1Zp",
+    "icon": "🦁"
+  },
+  {
+    "category": "最新加入",
+    "name": "modelmq",
+    "desc": "（签到0.001）",
+    "url": "https://modelmq.top/sign-up?aff=NcKj",
+    "icon": "📡"
+  },
+  {
+    "category": "最新加入",
+    "name": "Vc",
+    "desc": "（0.65左右）\n赠金可在克的福利分组使用",
+    "url": "https://sub.vcnovb.cn/register?aff=7STQSP4K75C4",
+    "icon": "💎"
+  },
+  {
+    "category": "最新加入",
+    "name": "梨叙",
+    "desc": "（试吃0.5）",
+    "url": "https://api.xrl.org.cn/sign-up?aff=s6uT",
+    "icon": "🍰"
+  },
+  {
+    "category": "最新加入",
+    "name": "AnAn",
+    "desc": "（试吃0.5）",
+    "url": "https://api.waianan.com/sign-up?aff=v5eQ",
+    "icon": "🍩"
+  },
+  {
+    "category": "最新加入",
+    "name": "rbubu",
+    "desc": "（试吃0.5）",
+    "url": "https://api.rbubu.com/sign-up?aff=T2w2",
+    "icon": "🧁"
+  },
+  {
+    "category": "最新加入",
+    "name": "秋刀鱼",
+    "desc": "（试吃2.5）",
+    "url": "https://qiudaoy.com/sign-up?aff=KPs2",
+    "icon": "🐟"
+  },
+  {
+    "category": "最新加入",
+    "name": "长春叙",
+    "desc": "（0.3左右）",
+    "url": "https://changchunxu.xyz/sign-up?aff=rprs",
+    "icon": "🌸"
+  },
+  {
+    "category": "最新加入",
+    "name": "月栖",
+    "desc": "（前日调用可签到）",
+    "url": "https://yueqiai.top/sign-up?aff=ZYu2",
+    "icon": "🌙"
+  },
+  {
+    "category": "最新加入",
+    "name": "EazyData API",
+    "desc": "（试吃50，后续上签到，有抽奖）",
+    "url": "https://eazydata.org/sign-up?aff=Kb21",
+    "icon": "🎁"
+  },
+  {
+    "category": "小r优选",
+    "name": "奇异果",
+    "desc": "（前日调用10次可签到）\n❤️anti逆向按次opus4.6",
+    "url": "https://api.qiyiguo.uk/sign-up?aff=QVNC",
+    "icon": "🥝"
+  },
+  {
+    "category": "小r优选",
+    "name": "晚晚舟",
+    "desc": "（邀10人/20r解锁签到）\n❤️0.05反重力",
+    "url": "https://wanwanzhou.top/register?aff=BZ4KH8ANL3S6",
+    "icon": "⛵"
+  },
+  {
+    "category": "小r优选",
+    "name": "NodeX",
+    "desc": "（0.1左右）",
+    "url": "https://nodexapi.it.com/sign-up?aff=WEYC",
+    "icon": "🕸️"
+  },
+  {
+    "category": "小r优选",
+    "name": "织云",
+    "desc": "（20以内）",
+    "url": "https://zhiyunapi.cc/register?aff=mEgq",
+    "icon": "☁️"
+  },
+  {
+    "category": "小r优选",
+    "name": "星期五",
+    "desc": "（5r解锁签到）",
+    "url": "https://api.fri5.top/sign-up?aff=Arhm",
+    "icon": "🎉"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "狐狐",
+    "desc": "（0.03r+5次调用可签到）",
+    "url": "https://api3.neonfox.top/sign-up?aff=GQpD",
+    "icon": "🦊"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "livelove",
+    "desc": "（10r/邀5人解锁签到）",
+    "url": "https://livelove.dev/register?aff=Y4MTT9SLTEES",
+    "icon": "💖"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "小雨",
+    "desc": "（前日调用可签到）",
+    "url": "https://mixed.strai.life/sign-up?aff=ae6E",
+    "icon": "🌧️"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "幸运午餐",
+    "desc": "（前日调用可签到）",
+    "url": "https://luckylunch.cc/register?aff=OQLU",
+    "icon": "🍱"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "玖时",
+    "desc": "（2r+3次调用可签到）",
+    "url": "https://api-cf.jiushi.xin/register?aff=SZwT",
+    "icon": "⏳"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "ovo API",
+    "desc": "（前日调用可签到）",
+    "url": "https://hk.ovoapi.cn/sign-up?aff=IPj0",
+    "icon": "🐣"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "千岛",
+    "desc": "（前日调用可签到）",
+    "url": "https://api2.qiandao.mom/sign-up?aff=yPE8",
+    "icon": "🏝️"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "火喵喵",
+    "desc": "（前日调用可签到）",
+    "url": "https://ai.dianhuomao.shop/sign-up?aff=th83",
+    "icon": "🔥"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "prime",
+    "desc": "（5r可签到）",
+    "url": "https://www.primerelay.online/register?aff=Y5AYED38TGT8",
+    "icon": "⭐"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "小流云",
+    "desc": "（前日调用可签到）",
+    "url": "https://ai.xlyun.pro/sign-up?aff=5qFS",
+    "icon": "💨"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "克克",
+    "desc": "（充值+调用可签到）",
+    "url": "https://api.kekeaittt.com/sign-up?aff=NVqa",
+    "icon": "🍫"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "宅恋",
+    "desc": "（前日调用可签到）",
+    "url": "https://az.zlapi.vip/register?aff=n0Hi",
+    "icon": "🏠"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "剑阁",
+    "desc": "（调用5次可签到）",
+    "url": "https://www.jiangeyun.xyz/register?aff=M9GZDM2TFZ7R",
+    "icon": "⚔️"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "飞光",
+    "desc": "（30r解锁签到）",
+    "url": "https://taleapi.asia/sign-up?aff=Wx33",
+    "icon": "🌠"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "好梦",
+    "desc": "（前日调用可签到）",
+    "url": "https://goodreamapi.online/register?aff=vXjm",
+    "icon": "💤"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "蓝天",
+    "desc": "（plus/vip可签到）",
+    "url": "https://api.wasdv.top/sign-up?aff=DNgO",
+    "icon": "🌤️"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "慧慧云",
+    "desc": "（5r/邀5人解锁签到）",
+    "url": "https://api.huihuiyun.top/register?aff=YTDVQ4YYNHRS",
+    "icon": "☁️"
+  },
+  {
+    "category": "有门槛签到",
+    "name": "玖观api",
+    "desc": "（10r解锁签到）",
+    "url": "https://jiuguan.cloud/sign-up?aff=U2lP",
+    "icon": "🏯"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "喵喵的AI中转",
+    "desc": "（限时额度）",
+    "url": "https://v2.aicode2api.cc/register?aff=YY5FZTUBGTSY",
+    "icon": "🐱"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "Laneai",
+    "desc": "（0.1）",
+    "url": "https://laneai.dev/i/f62b28cd",
+    "icon": "🛣️"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "大肘子",
+    "desc": "（0.1以内）",
+    "url": "https://api.eppppp.top/sign-up?aff=mTvw",
+    "icon": "🍖"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "guyscode",
+    "desc": "（0.1以内）",
+    "url": "https://www.guyscode.com/register?aff=u917",
+    "icon": "👨‍💻"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "哈基米",
+    "desc": "（5-20）",
+    "url": "https://api2.gemai.cc/sign-up?aff=VE7r",
+    "icon": "🐾"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "nova",
+    "desc": "（0.2左右）",
+    "url": "https://once-cf.novai.su/sign-up?aff=XJFo",
+    "icon": "💥"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "taicu",
+    "desc": "（0.01左右）",
+    "url": "https://taicu.vip/sign-up?aff=pUXT",
+    "icon": "🥬"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "freez",
+    "desc": "（0.01）",
+    "url": "https://www.freezapi.eu.cc/sign-up?aff=ZH5y",
+    "icon": "🧊"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "V",
+    "desc": "（0-0.2）",
+    "url": "https://v-api.zeabur.app/sign-up?aff=QJQ1",
+    "icon": "✌️"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "冻梨",
+    "desc": "（0.1以内）",
+    "url": "https://api.dongli.work/sign-up?aff=axTy",
+    "icon": "🍐"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "狸猫",
+    "desc": "（0.1以内）",
+    "url": "https://limao-api.com/sign-up?aff=wiin",
+    "icon": "🦝"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "聚梦",
+    "desc": "（0.1以内）",
+    "url": "https://api.jumengai.net/sign-up?aff=2m7E",
+    "icon": "💭"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "舒芙蕾",
+    "desc": "（0.1以内）",
+    "url": "https://shufulei.net/register?aff=Sjb4",
+    "icon": "🥞"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "橘子汽水",
+    "desc": "（0.1以内）",
+    "url": "https://juziqishui.net/register?aff=9Fn8",
+    "icon": "🍊"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "ksir",
+    "desc": "（<5可签到）",
+    "url": "https://ksir.fun/sign-up?aff=BsudG1q5",
+    "icon": "🎮"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "新希望",
+    "desc": "（0.1以内）",
+    "url": "https://www.xinxiwang.org/sqinv",
+    "icon": "🌱"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "piu酱",
+    "desc": "（1刀）",
+    "url": "https://piu.du4s.com/sign-up?aff=fG4r",
+    "icon": "🎯"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "棉花",
+    "desc": "（0.1以内）",
+    "url": "https://api.cottonapi.cloud/sign-up?aff=9LxE",
+    "icon": "☁️"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "xem",
+    "desc": "（0.1）",
+    "url": "https://ai.xem8k5.top/api/sso/start?aff=0J8d",
+    "icon": "🛸"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "缘起",
+    "desc": "（0.08-0.42）",
+    "url": "https://origin.nemodesk.top/sign-up?aff=9Icn",
+    "icon": "🎋"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "Rplay",
+    "desc": "（0.03左右）",
+    "url": "https://rplay.cc/sign-up?aff=rfW4",
+    "icon": "▶️"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "燧人",
+    "desc": "（0.05左右）",
+    "url": "https://api.haokun.de/sign-up?aff=S96t",
+    "icon": "🔥"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "塞艺",
+    "desc": "（0.10左右）",
+    "url": "https://open.selart.cc/sign-up?aff=EhPq",
+    "icon": "🎨"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "mn",
+    "desc": "（0.01）",
+    "url": "https://www.mnapi.com/register?aff=nYkI",
+    "icon": "🇲🇳"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "清风",
+    "desc": "（0.1左右）",
+    "url": "https://sllt.uk/register?aff=egXJ",
+    "icon": "🍃"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "思索",
+    "desc": "（0.01左右）",
+    "url": "https://newapi.sisuo.de/sign-up?aff=WAwa",
+    "icon": "🤔"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "sp",
+    "desc": "（0.1左右）",
+    "url": "https://spritnest.com/register?aff=idym",
+    "icon": "👻"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "可萌",
+    "desc": "（0.3左右）",
+    "url": "https://api456.me/sign-up?aff=55i2",
+    "icon": "🥺"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "sis",
+    "desc": "（0.01左右）",
+    "url": "https://sisyphusx.com/sign-up?aff=DtTG",
+    "icon": "🪨"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "清风2",
+    "desc": "（0.01）",
+    "url": "https://api.celestiai.xyz/register?aff=0BPe",
+    "icon": "🌬️"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "dgb",
+    "desc": "（30左右）",
+    "url": "https://freeapi.dgbmc.top/sign-up?aff=Km4T",
+    "icon": "💻"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "北极星",
+    "desc": "（0.1以内）",
+    "url": "https://api.beibeiai.top/sign-up?aff=nmHd",
+    "icon": "🌟"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "super",
+    "desc": "（0.1）",
+    "url": "https://superapi.buzz/sign-up?aff=S3N0",
+    "icon": "🦸"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "天絮 API",
+    "desc": "（0.3左右）",
+    "url": "https://chat-api4.087654.xyz/sign-up?aff=SerC",
+    "icon": "🌾"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "钱多多 API",
+    "desc": "（0.01左右）",
+    "url": "https://api2.aigcbest.top/sign-up?aff=vlzr",
+    "icon": "💰"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "茉莉冰茶",
+    "desc": "（0.15左右）",
+    "url": "https://www.molytea.ccwu.cc/sign-up?aff=gOxh",
+    "icon": "🍹"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "codzen",
+    "desc": "（0.1以内）",
+    "url": "https://llm-gateway.linkmnt.com/sign-up?aff=LckA",
+    "icon": "⌨️"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "年华",
+    "desc": "（1左右）",
+    "url": "https://us-3.nianhuaapi.com/sign-up?aff=cpYs",
+    "icon": "🕰️"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "modelgate",
+    "desc": "（抽奖随机0.05-5）",
+    "url": "https://modelgate.app/register?aff=coo2",
+    "icon": "🎰"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "微溪",
+    "desc": "（0.01-0.2）",
+    "url": "https://api.wxiai.com/register?aff=jeW7",
+    "icon": "💧"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "清酒",
+    "desc": "（0-10）",
+    "url": "https://qingjiu.nemodesk.top/register?aff=UlkH",
+    "icon": "🍶"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "小黑",
+    "desc": "（0.1以内）",
+    "url": "https://api.xiaoheiapi.com/sign-up?aff=h6jX",
+    "icon": "🐈‍⬛"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "超级稳定",
+    "desc": "（0.1以内）",
+    "url": "https://ai.gpt666claude.top/sign-up?aff=SVyh",
+    "icon": "🛡️"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "龙族",
+    "desc": "（0.1以内）",
+    "url": "https://api.dragonrajai.online/sign-up?aff=mBGM",
+    "icon": "🐉"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "星芽",
+    "desc": "（0.15左右，限时）",
+    "url": "https://xingya.site/sign-up?aff=7M3D",
+    "icon": "🌱"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "华尔兹",
+    "desc": "（0.1以内）",
+    "url": "https://www.huaerzi.online/register?aff=Vy29",
+    "icon": "💃"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "小黯",
+    "desc": "（0.1-0.2）",
+    "url": "https://noir.blacknoir.cn/sign-up?aff=TKWI",
+    "icon": "🌑"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "985",
+    "desc": "（0.1以内）",
+    "url": "https://985ai.art/sign-up?aff=aQzT",
+    "icon": "🎓"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "润航算力",
+    "desc": "（0-0.2）",
+    "url": "https://raivip.com/register?aff=gzvJ",
+    "icon": "🚀"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "gg27251",
+    "desc": "（20左右）",
+    "url": "https://gg27251.xyz/sign-up?aff=XwZv",
+    "icon": "🔫"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "sun",
+    "desc": "（0.5左右）",
+    "url": "https://sunapi.5201201314.top/sign-up?aff=NbuC",
+    "icon": "☀️"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "天才的隐藏窝",
+    "desc": "（1-10）",
+    "url": "https://api.sld.lol/sign-up?aff=S6b2",
+    "icon": "💡"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "aether",
+    "desc": "（70左右）",
+    "url": "https://api.abnt.it/sign-up?aff=PMwG",
+    "icon": "🌌"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "北执",
+    "desc": "（40左右）",
+    "url": "https://beizhi.dedyn.io/sign-up?aff=d5VO",
+    "icon": "🧭"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "charity",
+    "desc": "（100左右）",
+    "url": "https://free.camila.qzz.io/sign-up?aff=pg22",
+    "icon": "🤝"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "墨信",
+    "desc": "（0.4左右）",
+    "url": "https://www.moxin.plus/sign-up?aff=6j2V",
+    "icon": "✉️"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "聚光",
+    "desc": "（5左右）",
+    "url": "https://ai.juguang.chat/sign-up?aff=U6kn",
+    "icon": "🔦"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "布丁熊",
+    "desc": "（0.01左右）",
+    "url": "https://ai.hyperx.one/sign-up?aff=OCAg",
+    "icon": "🐻"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "信心花舍",
+    "desc": "（0.5左右）",
+    "url": "https://xxhs.bgstudio.top/sign-up?aff=qQed",
+    "icon": "💐"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "7891",
+    "desc": "（10-20）",
+    "url": "https://7891vip.cc.cd/login?view=reg&aff=X6e2",
+    "icon": "🎲"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "白柚猫",
+    "desc": "（0.1以内）",
+    "url": "https://api.baiyounico.xyz/sign-up?aff=Y5dw",
+    "icon": "🐈"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "卡皮巴拉",
+    "desc": "（0.3左右）",
+    "url": "https://kapibala.asia/sign-up?aff=JTxr",
+    "icon": "🦦"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "聚萌岛",
+    "desc": "（0.2左右）",
+    "url": "https://jumengai.de5.net/sign-up?aff=DIFi",
+    "icon": "🏝️"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "风绘",
+    "desc": "（0.3）",
+    "url": "https://api.huidev.com/sign-up?aff=FHN8",
+    "icon": "🌬️"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "超级至尊",
+    "desc": "（0.0001）",
+    "url": "https://cjzc.art/sign-up?aff=pEA9",
+    "icon": "👑"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "HyxAPI",
+    "desc": "（0-10）",
+    "url": "https://hyxware.com/auth?mode=register&aff=I4zB",
+    "icon": "🧬"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "梧桐小苑",
+    "desc": "（0.5左右）",
+    "url": "https://api.wtxiaoyuan.top/sign-up?aff=cnxW",
+    "icon": "🍂"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "石头",
+    "desc": "（0.03左右）",
+    "url": "https://stoneai.fun/sign-up?aff=g7kk",
+    "icon": "🪨"
+  },
+  {
+    "category": "无签到",
+    "name": "REMU.CHAT",
+    "desc": "（试吃3）",
+    "url": "https://remu.chat/signup?ref=64660C5A",
+    "icon": "🎀"
+  },
+  {
+    "category": "无签到",
+    "name": "万象灵算",
+    "desc": "（无试吃）",
+    "url": "https://wxls.ccwu.cc/sign-up?aff=8RQZ",
+    "icon": "🌌"
+  },
+  {
+    "category": "无签到",
+    "name": "大米饭",
+    "desc": "（试吃2）",
+    "url": "https://damifan.xyz/sign-up?aff=jjkp",
+    "icon": "🍚"
+  },
+  {
+    "category": "无签到",
+    "name": "哈基鱼",
+    "desc": "（试吃1）",
+    "url": "https://api.qwecc.icu/sign-up?aff=PDix",
+    "icon": "🐟"
+  },
+  {
+    "category": "无签到",
+    "name": "糯米兔",
+    "desc": "（试吃0.5）",
+    "url": "https://api.seerss.xyz/register?aff=WRsP",
+    "icon": "🐰"
+  },
+  {
+    "category": "无签到",
+    "name": "choosec",
+    "desc": "（试吃6）",
+    "url": "https://api.choosec.cn/sign-up?aff=0Xl6",
+    "icon": "🎯"
+  },
+  {
+    "category": "无签到",
+    "name": "芙卡卡",
+    "desc": "（试吃200）",
+    "url": "https://api.fuka.win/sign-up?aff=WUcJ",
+    "icon": "💎"
+  },
+  {
+    "category": "无签到",
+    "name": "flowbee",
+    "desc": "（试吃0.6）",
+    "url": "https://flowbee.top/sign-up?aff=KKqp",
+    "icon": "🐝"
+  },
+  {
+    "category": "无签到",
+    "name": "arpanet",
+    "desc": "（有试吃）",
+    "url": "https://arpanet.icu/sign-up?aff=cW2P",
+    "icon": "🌐"
+  },
+  {
+    "category": "无签到",
+    "name": "qiny",
+    "desc": "（有试吃）",
+    "url": "https://love.qinyan.icu/register?aff=eMse",
+    "icon": "🎵"
+  },
+  {
+    "category": "无签到",
+    "name": "星辰",
+    "desc": "（试吃2）",
+    "url": "https://api1.apistar.com.cn/sign-up?aff=b47Z",
+    "icon": "🌠"
+  },
+  {
+    "category": "无签到",
+    "name": "即享",
+    "desc": "（试吃3）",
+    "url": "https://jixiangai.xyz/sign-up?aff=Tdxq",
+    "icon": "🎁"
+  }
+]
