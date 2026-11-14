@@ -1,6 +1,41 @@
 [
   {
     "category": "最新加入",
+    "name": "初恋",
+    "desc": "（试吃0.6，签到0.1-0.2）",
+    "url": "https://api.hicode.me/sign-up?aff=t4zT",
+    "icon": "💑"
+  },
+  {
+    "category": "最新加入",
+    "name": "南北绿豆",
+    "desc": "（试吃0.5，签到0.2-1）",
+    "url": "https://98ntl.com/sign-up?aff=N0MP",
+    "icon": "🫘"
+  },
+  {
+    "category": "最新加入",
+    "name": "漫聊",
+    "desc": "（签到0.6限时）",
+    "url": "https://manliao.cyou/register?aff=000752",
+    "icon": "💬"
+  },
+  {
+    "category": "最新加入",
+    "name": "axo",
+    "desc": "（试吃2进群再加3）",
+    "url": "https://axoai.cc/sign-up?aff=BU9k",
+    "icon": "🪓"
+  },
+  {
+    "category": "最新加入",
+    "name": "幸运熊",
+    "desc": "（试吃2，签到0.1-0.4）",
+    "url": "https://lucky-bear.asia/sign-up?aff=c2k0",
+    "icon": "🐻"
+  },
+  {
+    "category": "最新加入",
     "name": "银杏",
     "desc": "（试吃6+进群5）\n全按量计费",
     "url": "https://svip.katioai.com/sign-up?aff=aDpC",
@@ -738,7 +773,7 @@
     "category": "无门槛签到",
     "name": "梧桐小苑",
     "desc": "（0.5左右）",
-    "url": "https://api.wtxiaoyuan.top/sign-up?aff=cnxW",
+    "url": "https://api.wtxiaoyuan.top/register?aff=cWlz",
     "icon": "🍂"
   },
   {
