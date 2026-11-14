@@ -30,8 +30,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
-            background: url('img/mmexport1793733959765.jpg') no-repeat center center fixed;
-            background-size: cover;
             background-color: #1a1a2e;
             color: var(--text-color);
             min-height: 100vh;
@@ -39,31 +37,30 @@
             justify-content: center;
             padding: 20px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            transition: background 0.5s, color 0.3s;
-            /* 新增：背景滤镜变量 */
+            transition: color 0.3s;
             --bg-blur: 0px;
             --bg-brightness: 100%;
+            overflow-x: hidden;
         }
 
-        /* 背景滤镜层 */
+        /* 优化：背景独立图层，加载和切换时丝滑过渡 */
         #bg-layer {
             position: fixed;
-            top: -20px; left: -20px; right: -20px; bottom: -20px;
-            background: inherit;
+            top: -30px; left: -30px; right: -30px; bottom: -30px; /* 扩大范围防止模糊边缘露白 */
+            background: url('img/mmexport1793733959765.jpg') no-repeat center center;
             background-size: cover;
-            background-position: center;
             filter: blur(var(--bg-blur)) brightness(var(--bg-brightness));
             z-index: -2;
-            transition: filter 0.3s;
+            transition: background 0.8s ease, filter 0.3s ease;
+            will-change: filter, background-image;
         }
 
         body.dark-mode::before {
             content: ""; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.5); /* 夜间更深遮罩 */
-            z-index: -1; pointer-events: none; transition: background 0.5s;
+            background: rgba(0, 0, 0, 0.5); z-index: -1; pointer-events: none; transition: background 0.5s;
         }
 
-        /* 樱花与星光 Canvas 层 */
+        /* 优化：Canvas 使用绝对定位，减少重绘 */
         #fx-canvas {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             z-index: -1; pointer-events: none;
@@ -74,10 +71,7 @@
             padding-top: 40px; padding-bottom: 80px; position: relative; z-index: 1;
         }
 
-        /* 右上角按钮组 */
-        .top-controls {
-            position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 100;
-        }
+        .top-controls { position: fixed; top: 20px; right: 20px; display: flex; gap: 10px; z-index: 100; }
         .control-btn {
             width: 40px; height: 40px; border-radius: 50%;
             background: var(--header-bg); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
@@ -94,11 +88,8 @@
         .header-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
         h1 { color: #fff; font-size: 22px; text-shadow: 0 2px 4px rgba(0,0,0,0.3); margin-bottom: 5px; letter-spacing: 1px; }
+        .subtitle { color: #fff; font-size: 13px; text-shadow: 0 1px 3px rgba(0,0,0,0.3); margin-bottom: 20px; opacity: 0.9; height: 18px; }
         
-        /* 打字机副标题 */
-        .subtitle { color: #fff; font-size: 13px; text-shadow: 0 1px 3px rgba(0,0,0,0.3); margin-bottom: 20px; opacity: 0.9; height: 18px;}
-        
-        /* 吸顶容器 */
         .sticky-header {
             position: sticky; top: 10px; width: 100%; z-index: 90; display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;
         }
@@ -111,7 +102,6 @@
         }
         .search-box::placeholder { color: var(--text-desc-color); }
         
-        /* 同步最新按钮 */
         .sync-btn {
             position: absolute; right: 15px; top: 50%; transform: translateY(-50%);
             font-size: 16px; cursor: pointer; opacity: 0.6; transition: transform 0.3s;
@@ -147,20 +137,21 @@
         .link-list { list-style: none; width: 100%; display: flex; flex-direction: column; gap: 12px; }
         .link-list.hidden { display: none; }
 
-        /* 卡片瀑布流入场动画 */
+        /* 优化：精简的瀑布流只用简单的 translateY */
         .link-item {
-            position: relative; width: 100%;
-            opacity: 0; transform: translateY(20px);
-            animation: slideUpFade 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+            position: relative; width: 100%; opacity: 0;
+            animation: simpleFadeInUp 0.4s ease forwards;
         }
         
         .link-item a {
             display: flex; align-items: center; padding: 15px 40px 15px 15px;
             background: linear-gradient(to right, var(--glass-bg), rgba(255, 255, 255, 0.2));
-            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            /* 优化：去掉没必要的深层毛玻璃，或者减轻半径 */
+            backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
             border: 1.5px solid var(--glass-border); border-radius: 50px; 
             text-decoration: none; color: var(--text-color);
-            transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: background 0.2s, transform 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            will-change: transform;
         }
         .link-item a:hover { background: var(--glass-bg-hover); transform: translateY(-2px); }
         body.dark-mode .link-item a { background: linear-gradient(to right, var(--glass-bg), rgba(30, 30, 40, 0.3)); }
@@ -192,9 +183,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15); opacity: 0; visibility: hidden; transition: all 0.3s ease; z-index: 100;
         }
         #backToTop.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        #backToTop:hover { background: var(--glass-bg-hover); }
 
-        /* 弹窗通用样式 */
         .modal-overlay {
             position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);
@@ -208,19 +197,14 @@
         }
         .modal-box h3 { font-size: 16px; color: var(--text-color); margin-bottom: 15px; }
         
-        /* 滑块样式 */
         .slider-group { text-align: left; margin-bottom: 15px; color: var(--text-color); font-size: 13px; }
         .slider-group label { display: block; margin-bottom: 5px; font-weight: 600;}
-        input[type=range] {
-            -webkit-appearance: none; width: 100%; background: transparent; height: 24px;
-        }
+        input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; height: 24px; }
         input[type=range]::-webkit-slider-thumb {
             -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%;
             background: #ff4757; cursor: pointer; margin-top: -6px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
-        input[type=range]::-webkit-slider-runnable-track {
-            width: 100%; height: 4px; cursor: pointer; background: rgba(255,255,255,0.4); border-radius: 2px;
-        }
+        input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: rgba(255,255,255,0.4); border-radius: 2px; }
 
         .modal-btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 15px;}
         .modal-btn {
@@ -228,18 +212,16 @@
             background: rgba(255,255,255,0.2); color: var(--text-color); font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s;
         }
         .modal-btn:hover { background: rgba(255,255,255,0.4); }
-        body.dark-mode .modal-btn { background: rgba(255,255,255,0.1); }
-        body.dark-mode .modal-btn:hover { background: rgba(255,255,255,0.2); }
 
+        /* 轻量级动画 */
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { to { transform: translateY(0); } }
-        @keyframes slideUpFade { to { opacity: 1; transform: translateY(0); } }
+        @keyframes simpleFadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<!-- 背景和特效层 -->
 <div id="bg-layer"></div>
 <canvas id="fx-canvas"></canvas>
 
@@ -248,21 +230,17 @@
     <div class="control-btn" id="themeToggle" title="切换日夜模式">🌙</div>
 </div>
 
-<!-- 壁纸与滤镜调节弹窗 -->
 <div class="modal-overlay" id="bgModal">
     <div class="modal-box">
         <h3>⚙️ 壁纸设置</h3>
-        
         <div class="slider-group">
             <label>背景模糊度: <span id="blurVal">0</span>px</label>
-            <input type="range" id="blurSlider" min="0" max="20" value="0" step="1">
+            <input type="range" id="blurSlider" min="0" max="15" value="0" step="1">
         </div>
-        
         <div class="slider-group">
             <label>背景亮度: <span id="brightVal">100</span>%</label>
-            <input type="range" id="brightSlider" min="20" max="100" value="100" step="5">
+            <input type="range" id="brightSlider" min="20" max="100" value="100" step="10">
         </div>
-
         <div class="modal-btn-group">
             <button class="modal-btn" id="uploadBtn">📁 上传自定义图片</button>
             <button class="modal-btn" id="resetBgBtn">🔄 恢复默认壁纸</button>
@@ -273,7 +251,6 @@
 <input type="file" id="bgFileInput" accept="image/*" style="display: none;">
 
 <div class="container">
-    <!-- 点击彩蛋绑定在头像上 -->
     <div class="header-avatar" id="avatar">
         <img src="img/mmexport1793734398403.jpg" alt="头像">
     </div>
@@ -294,7 +271,7 @@
             欢迎来到 API 站点合集！<br>
             本页面所有内容均来自本人收集，试吃或签到有可能不准确，以实际情况为准。<br>
             如有问题或需要更新链接，请联系本人。<br>
-            11.14新赠：初恋，南北绿豆，漫聊，幸运熊，axo
+            11.14新增：初恋，南北绿豆，漫聊，幸运熊，axo
         </div>
     </div>
 
@@ -306,61 +283,54 @@
 <div id="backToTop">↑</div>
 
 <script>
-    // ================= 1. 滤镜与主题与壁纸 =================
-    const themeToggle = document.getElementById('themeToggle');
+    // ================= 1. 基础逻辑 =================
     const body = document.body;
+    const themeToggle = document.getElementById('themeToggle');
     const blurSlider = document.getElementById('blurSlider');
     const brightSlider = document.getElementById('brightSlider');
-    const blurVal = document.getElementById('blurVal');
-    const brightVal = document.getElementById('brightVal');
     const bgModal = document.getElementById('bgModal');
-    const bgToggle = document.getElementById('bgToggle');
+    const bgLayer = document.getElementById('bg-layer');
 
-    // 初始化主题
-    if (localStorage.getItem('theme') === 'dark') {
-        body.classList.add('dark-mode');
-        themeToggle.textContent = '☀️';
-    }
-
-    // 初始化滤镜
+    // 读取配置
+    const savedTheme = localStorage.getItem('theme');
+    const savedBg = localStorage.getItem('custom_bg');
     const savedBlur = localStorage.getItem('bg_blur') || '0';
     const savedBright = localStorage.getItem('bg_bright') || '100';
-    blurSlider.value = savedBlur; blurVal.textContent = savedBlur;
-    brightSlider.value = savedBright; brightVal.textContent = savedBright;
+
+    // 应用配置
+    if (savedTheme === 'dark') { body.classList.add('dark-mode'); themeToggle.textContent = '☀️'; }
+    if (savedBg) { bgLayer.style.backgroundImage = `url('${savedBg}')`; }
+    blurSlider.value = savedBlur; document.getElementById('blurVal').textContent = savedBlur;
+    brightSlider.value = savedBright; document.getElementById('brightVal').textContent = savedBright;
     body.style.setProperty('--bg-blur', savedBlur + 'px');
     body.style.setProperty('--bg-brightness', savedBright + '%');
 
-    // 切换主题
+    // 滑动防抖处理
+    let sliderTimer;
+    function updateFilter(type, val) {
+        clearTimeout(sliderTimer);
+        sliderTimer = setTimeout(() => {
+            body.style.setProperty(type === 'blur' ? '--bg-blur' : '--bg-brightness', val + (type === 'blur' ? 'px' : '%'));
+            localStorage.setItem(type === 'blur' ? 'bg_blur' : 'bg_bright', val);
+        }, 50);
+    }
+
+    blurSlider.addEventListener('input', e => { document.getElementById('blurVal').textContent = e.target.value; updateFilter('blur', e.target.value); });
+    brightSlider.addEventListener('input', e => { document.getElementById('brightVal').textContent = e.target.value; updateFilter('bright', e.target.value); });
+
     themeToggle.addEventListener('click', () => {
         body.classList.toggle('dark-mode');
         const isDark = body.classList.contains('dark-mode');
         themeToggle.textContent = isDark ? '☀️' : '🌙';
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        initCanvasFX(); // 重新初始化特效
+        initFX();
     });
 
-    // 滑块联动
-    blurSlider.addEventListener('input', (e) => {
-        const val = e.target.value;
-        blurVal.textContent = val;
-        body.style.setProperty('--bg-blur', val + 'px');
-        localStorage.setItem('bg_blur', val);
-    });
-    brightSlider.addEventListener('input', (e) => {
-        const val = e.target.value;
-        brightVal.textContent = val;
-        body.style.setProperty('--bg-brightness', val + '%');
-        localStorage.setItem('bg_bright', val);
-    });
-
-    // 壁纸上传逻辑
-    const savedBg = localStorage.getItem('custom_bg');
-    if (savedBg) document.getElementById('bg-layer').style.backgroundImage = `url('${savedBg}')`;
-
-    bgToggle.addEventListener('click', () => bgModal.classList.add('show'));
+    // 壁纸设置
+    document.getElementById('bgToggle').addEventListener('click', () => bgModal.classList.add('show'));
     document.getElementById('cancelBtn').addEventListener('click', () => bgModal.classList.remove('show'));
-    
     document.getElementById('uploadBtn').addEventListener('click', () => document.getElementById('bgFileInput').click());
+    
     document.getElementById('bgFileInput').addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -371,151 +341,152 @@
             const base64 = event.target.result;
             try {
                 localStorage.setItem('custom_bg', base64);
-                document.getElementById('bg-layer').style.backgroundImage = `url('${base64}')`;
+                bgLayer.style.backgroundImage = `url('${base64}')`; // 触发平滑过渡
                 bgModal.classList.remove('show');
             } catch (error) { alert("存储空间不足，请换张小点的图~"); }
         };
         reader.readAsDataURL(file);
     });
+
     document.getElementById('resetBgBtn').addEventListener('click', () => {
         localStorage.removeItem('custom_bg');
-        document.getElementById('bg-layer').style.backgroundImage = `url('img/mmexport1793733959765.jpg')`;
+        bgLayer.style.backgroundImage = `url('img/mmexport1793733959765.jpg')`;
         bgModal.classList.remove('show');
     });
 
-    // ================= 2. 打字机特效 =================
+    // ================= 2. 打字机 =================
     const texts = ["各种站点持续更新中~", "上车需谨慎，测试有风险哦~", "点击头像有惊喜哟 (๑•̀ㅂ•́)و✧"];
     let typeIdx = 0, charIdx = 0, isDeleting = false;
     const typeEl = document.getElementById('typewriter');
     
     function type() {
         const current = texts[typeIdx];
-        if (isDeleting) {
-            typeEl.textContent = current.substring(0, charIdx - 1);
-            charIdx--;
-        } else {
-            typeEl.textContent = current.substring(0, charIdx + 1);
-            charIdx++;
-        }
+        if (isDeleting) { typeEl.textContent = current.substring(0, charIdx - 1); charIdx--; }
+        else { typeEl.textContent = current.substring(0, charIdx + 1); charIdx++; }
         
-        let speed = isDeleting ? 50 : 150;
-        if (!isDeleting && charIdx === current.length) {
-            speed = 2000; isDeleting = true;
-        } else if (isDeleting && charIdx === 0) {
-            isDeleting = false; typeIdx = (typeIdx + 1) % texts.length; speed = 500;
-        }
+        let speed = isDeleting ? 40 : 120;
+        if (!isDeleting && charIdx === current.length) { speed = 2000; isDeleting = true; }
+        else if (isDeleting && charIdx === 0) { isDeleting = false; typeIdx = (typeIdx + 1) % texts.length; speed = 500; }
         setTimeout(type, speed);
     }
     setTimeout(type, 1000);
 
-    // ================= 3. 樱花与星光 Canvas 特效 =================
+    // ================= 3. 优化版 Canvas 特效 =================
     const canvas = document.getElementById('fx-canvas');
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     let particles = [];
     let isDarkMode = body.classList.contains('dark-mode');
+    let animationFrameId;
+    let isPageVisible = true; // 页面可见性
 
+    // 限制最高像素比，防止高分屏卡顿
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    
     function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        ctx.scale(dpr, dpr);
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
     }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
     class Particle {
         constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height - canvas.height;
-            this.size = Math.random() * 3 + 1;
+            this.x = Math.random() * window.innerWidth;
+            this.y = Math.random() * window.innerHeight - window.innerHeight;
+            this.size = Math.random() * 2.5 + 1;
             this.speedY = Math.random() * 1 + 0.5;
-            this.speedX = Math.random() * 0.5 - 0.25;
+            this.speedX = Math.random() * 0.4 - 0.2;
             this.opacity = Math.random() * 0.5 + 0.3;
         }
         update() {
             this.y += this.speedY;
             this.x += this.speedX;
-            if (this.y > canvas.height) {
-                this.y = -10; this.x = Math.random() * canvas.width;
-            }
+            if (this.y > window.innerHeight) { this.y = -10; this.x = Math.random() * window.innerWidth; }
         }
         draw() {
             ctx.beginPath();
-            if (isDarkMode) { // 夜间星光
+            if (isDarkMode) {
                 ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`;
-                ctx.arc(this.x, this.y, this.size * 0.5, 0, Math.PI * 2);
-                ctx.fill();
-            } else { // 日间樱花
+                ctx.arc(this.x, this.y, this.size * 0.6, 0, Math.PI * 2);
+            } else {
                 ctx.fillStyle = `rgba(255, 182, 193, ${this.opacity})`;
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
             }
+            ctx.fill();
         }
     }
 
-    function initCanvasFX() {
+    function initFX() {
         isDarkMode = body.classList.contains('dark-mode');
         particles = [];
-        // 夜间星星多点，白天樱花少点
-        const count = isDarkMode ? 60 : 30; 
+        const count = isDarkMode ? 40 : 20; // 大幅减少粒子数量
         for (let i = 0; i < count; i++) particles.push(new Particle());
     }
 
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // 降频渲染（60fps -> 约30fps），肉眼感觉不出差别，但手机发热大减
+    let lastTime = 0;
+    function animate(time) {
+        if (!isPageVisible) return; // 如果切到后台就暂停
+        animationFrameId = requestAnimationFrame(animate);
+        
+        if (time - lastTime < 33) return; // 控制帧率
+        lastTime = time;
+
+        ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
         particles.forEach(p => { p.update(); p.draw(); });
-        requestAnimationFrame(animate);
     }
-    initCanvasFX();
+
+    initFX();
     animate();
 
-    // ================= 4. 点击彩蛋 =================
+    // 监听页面隐藏/显示，节省性能
+    document.addEventListener("visibilitychange", () => {
+        isPageVisible = !document.hidden;
+        if (isPageVisible) { lastTime = 0; animate(); } 
+        else { cancelAnimationFrame(animationFrameId); }
+    });
+
+    // 点击彩蛋
     let clickCount = 0;
-    const avatar = document.getElementById('avatar');
-    avatar.addEventListener('click', () => {
+    document.getElementById('avatar').addEventListener('click', () => {
         clickCount++;
         if (clickCount === 5) {
-            // 触发文字烟花特效
-            for(let i=0; i<30; i++) {
+            for(let i=0; i<20; i++) {
                 const p = new Particle();
-                p.y = window.innerHeight / 2;
-                p.x = window.innerWidth / 2;
-                p.speedY = (Math.random() - 0.5) * 10;
-                p.speedX = (Math.random() - 0.5) * 10;
+                p.y = window.innerHeight / 2; p.x = window.innerWidth / 2;
+                p.speedY = (Math.random() - 0.5) * 8; p.speedX = (Math.random() - 0.5) * 8;
                 particles.push(p);
             }
-            setTimeout(() => { initCanvasFX(); }, 3000); // 3秒后恢复
+            setTimeout(() => initFX(), 3000);
             clickCount = 0;
         }
     });
 
-    // ================= 5. 回到顶部与阅读记忆 =================
+    // ================= 4. 回到顶部与数据加载 =================
     const backToTopBtn = document.getElementById('backToTop');
     let scrollTimeout;
     window.addEventListener('scroll', () => {
-        // 显示/隐藏回顶按钮
         if (window.scrollY > 300) backToTopBtn.classList.add('show');
         else backToTopBtn.classList.remove('show');
 
-        // 记忆阅读位置
         clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            localStorage.setItem('scroll_pos', window.scrollY);
-        }, 200);
-    });
+        scrollTimeout = setTimeout(() => localStorage.setItem('scroll_pos', window.scrollY), 200);
+    }, { passive: true }); // 使用 passive 提升滚动流畅度
+
     backToTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-    // ================= 6. 数据加载、搜索、收藏 =================
     let originalData = [];
     let favorites = JSON.parse(localStorage.getItem('fav_links') || '[]');
 
-    // 纯前端同步刷新
     document.getElementById('syncBtn').addEventListener('click', function() {
         this.style.transform = 'translateY(-50%) rotate(360deg)';
-        setTimeout(() => this.style.transform = 'translateY(-50%) rotate(0deg)', 300);
         setTimeout(() => window.location.reload(true), 300);
     });
 
     function loadData() {
-        // 加时间戳强制清缓存
         fetch('links.json?t=' + new Date().getTime())
             .then(res => res.json())
             .then(data => {
@@ -523,17 +494,15 @@
                 renderData(originalData);
                 setupAnnouncement();
                 
-                // 恢复阅读位置 (延迟一点等DOM渲染)
                 const savedScroll = localStorage.getItem('scroll_pos');
                 if (savedScroll && !sessionStorage.getItem('scrolled')) {
                     setTimeout(() => {
                         window.scrollTo({ top: parseInt(savedScroll), behavior: 'instant' });
-                        sessionStorage.setItem('scrolled', 'true'); // 只恢复一次
+                        sessionStorage.setItem('scrolled', 'true');
                     }, 100);
                 }
             })
             .catch(err => {
-                console.error(err);
                 document.getElementById('mainContainer').innerHTML = '<div class="loading">数据加载失败</div>';
             });
     }
@@ -542,11 +511,7 @@
     function renderData(dataToRender) {
         const container = document.getElementById('mainContainer');
         container.innerHTML = ''; 
-
-        if (dataToRender.length === 0) {
-            container.innerHTML = '<div class="loading" style="color:#fff;">没有找到匹配的链接~</div>';
-            return;
-        }
+        if (dataToRender.length === 0) { container.innerHTML = '<div class="loading" style="color:#fff;">没有找到匹配的链接~</div>'; return; }
 
         const isSearching = document.getElementById('searchInput').value.trim() !== '';
         let finalRenderData = [...dataToRender];
@@ -554,8 +519,7 @@
         if (!isSearching) {
             const favItems = originalData.filter(item => favorites.includes(item.url));
             if (favItems.length > 0) {
-                const markedFavItems = favItems.map(item => ({...item, category: '⭐️ 我的收藏'}));
-                finalRenderData = [...markedFavItems, ...finalRenderData];
+                finalRenderData = [...favItems.map(item => ({...item, category: '⭐️ 我的收藏'})), ...finalRenderData];
             }
         }
 
@@ -566,7 +530,7 @@
             groupedData[cat].push(item);
         });
 
-        let globalIndex = 0; // 用于瀑布流延迟
+        let globalIndex = 0;
 
         for (const category in groupedData) {
             const groupDiv = document.createElement('div');
@@ -591,15 +555,13 @@
             groupedData[category].forEach(item => {
                 const li = document.createElement('li');
                 li.className = 'link-item';
-                // 瀑布流延迟计算
-                li.style.animationDelay = `${globalIndex * 0.03}s`;
+                li.style.animationDelay = `${globalIndex * 0.02}s`; // 优化延迟时间
                 globalIndex++;
 
                 const formattedDesc = item.desc.replace(/\n/g, '<br>');
-                let iconHtml = item.icon && item.icon.startsWith('http') ? `<img src="${item.icon}" alt="icon">` : (item.icon || '🔗');
+                let iconHtml = item.icon && item.icon.startsWith('http') ? `<img src="${item.icon}" alt="icon" loading="lazy">` : (item.icon || '🔗');
                 const isFav = favorites.includes(item.url);
-                const favIcon = isFav ? '❤️' : '♡';
-
+                
                 li.innerHTML = `
                     <a href="${item.url}" target="_blank" rel="noopener noreferrer">
                         <div class="icon-box">${iconHtml}</div>
@@ -608,7 +570,7 @@
                             <span class="link-desc">${formattedDesc}</span>
                         </div>
                     </a>
-                    <div class="fav-btn ${isFav ? 'active' : ''}" data-url="${item.url}">${favIcon}</div>
+                    <div class="fav-btn ${isFav ? 'active' : ''}" data-url="${item.url}">${isFav ? '❤️' : '♡'}</div>
                 `;
                 ul.appendChild(li);
             });
@@ -626,24 +588,20 @@
                     favorites = favorites.filter(u => u !== url);
                     this.classList.remove('active'); this.textContent = '♡';
                 } else {
-                    favorites.push(url);
-                    this.classList.add('active'); this.textContent = '❤️';
+                    favorites.push(url); this.classList.add('active'); this.textContent = '❤️';
                 }
                 localStorage.setItem('fav_links', JSON.stringify(favorites));
-                if (document.getElementById('searchInput').value.trim() === '') {
-                    renderData(originalData);
-                }
+                if (document.getElementById('searchInput').value.trim() === '') renderData(originalData);
             };
         });
     }
 
     const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', function(e) {
-        const keyword = e.target.value.toLowerCase().trim();
-        const filteredData = originalData.filter(item => {
-            return item.name.toLowerCase().includes(keyword) || 
-                   (item.desc && item.desc.toLowerCase().includes(keyword));
-        });
+    searchInput.addEventListener('input', function() {
+        const keyword = this.value.toLowerCase().trim();
+        const filteredData = originalData.filter(item => 
+            item.name.toLowerCase().includes(keyword) || (item.desc && item.desc.toLowerCase().includes(keyword))
+        );
         renderData(filteredData);
     });
 
@@ -656,6 +614,5 @@
         };
     }
 </script>
-
 </body>
 </html>
