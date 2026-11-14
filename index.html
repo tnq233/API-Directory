@@ -2,25 +2,63 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>API 站点合集</title>
     <style>
-        /* 基础设置 */
+        /* 基础设置与主题变量 */
+        :root {
+            --text-color: #333;
+            --text-desc-color: #444;
+            --glass-bg: rgba(255, 255, 255, 0.10);
+            --glass-bg-hover: rgba(255, 255, 255, 0.3);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --header-bg: rgba(255, 255, 255, 0.4);
+            --category-text: #fff;
+            --category-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+
+        /* 夜间模式变量 */
+        body.dark-mode {
+            --text-color: #e0e0e0;
+            --text-desc-color: #b0b0b0;
+            --glass-bg: rgba(30, 30, 40, 0.4);
+            --glass-bg-hover: rgba(50, 50, 70, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --header-bg: rgba(30, 30, 40, 0.7);
+            --category-text: #f0f0f0;
+            --category-shadow: 0 1px 3px rgba(0,0,0,0.8);
+            background-color: #1a1a2e;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
+
         body {
             background: url('img/mmexport1793733959765.jpg') no-repeat center center fixed;
             background-size: cover;
             background-color: #e0c3fc; 
-            color: #333;
+            color: var(--text-color);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             padding: 20px;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            transition: background 0.5s, color 0.3s;
+        }
+
+        /* 夜间模式遮罩：让背景图变暗 */
+        body.dark-mode::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: -1;
+            pointer-events: none;
+            transition: background 0.5s;
         }
 
         .container {
@@ -29,8 +67,30 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 30px;
-            padding-bottom: 50px;
+            padding-top: 40px;
+            padding-bottom: 80px;
+        }
+
+        /* 主题切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--header-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1.5px solid var(--glass-border);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
         }
 
         /* 顶部头像 */
@@ -38,21 +98,16 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
+            background: var(--header-bg);
             border: 2px solid rgba(255, 255, 255, 0.8);
             display: flex;
             justify-content: center;
             align-items: center;
             margin-bottom: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            backdrop-filter: blur(5px);
             overflow: hidden;
         }
-        .header-avatar img {
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover;
-        }
+        .header-avatar img { width: 100%; height: 100%; object-fit: cover; }
 
         h1 {
             color: #fff;
@@ -69,203 +124,168 @@
             opacity: 0.9;
         }
 
-        /* ================= 搜索框 ================= */
-        .search-container {
+        /* 吸顶容器 */
+        .sticky-header {
+            position: sticky;
+            top: 10px;
             width: 100%;
-            margin-bottom: 15px;
+            z-index: 90;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
         }
+
+        /* 搜索框 */
         .search-box {
             width: 100%;
             padding: 12px 20px;
             border-radius: 50px;
-            border: 1.5px solid rgba(255, 255, 255, 0.6);
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            color: #333;
+            border: 1.5px solid var(--glass-border);
+            background: var(--header-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            color: var(--text-color);
             font-size: 14px;
             outline: none;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
         }
-        .search-box::placeholder { color: #555; }
-        .search-box:focus {
-            background: rgba(255, 255, 255, 0.5);
-            border-color: rgba(255, 255, 255, 0.9);
-        }
+        .search-box::placeholder { color: var(--text-desc-color); }
 
-        /* ================= 公告栏 ================= */
-        .announcement-wrapper {
-            width: 100%;
-            margin-bottom: 20px;
-        }
+        /* 公告栏 */
         .announcement-title {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1.5px solid rgba(255, 255, 255, 0.6);
+            padding: 12px 20px;
+            background: var(--header-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1.5px solid var(--glass-border);
             border-radius: 50px;
             cursor: pointer;
             font-weight: 600;
-            font-size: 15px;
-            color: #333;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            font-size: 14px;
+            color: var(--text-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             transition: all 0.3s ease;
         }
-        .announcement-title:hover { background: rgba(255, 255, 255, 0.6); }
-        .announcement-title .arrow {
-            font-size: 14px;
-            transition: transform 0.3s;
-        }
+        .announcement-title .arrow { font-size: 14px; transition: transform 0.3s; }
         .announcement-title.active .arrow { transform: rotate(180deg); }
         
         .announcement-content {
             display: none;
-            margin-top: 10px;
             padding: 15px 20px;
-            background: rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1.5px solid rgba(255, 255, 255, 0.5);
+            background: var(--header-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1.5px solid var(--glass-border);
             border-radius: 20px;
             font-size: 13px;
             line-height: 1.6;
-            color: #333;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            color: var(--text-color);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             white-space: pre-wrap; 
         }
-        .announcement-content.show {
-            display: block;
-            animation: fadeInDown 0.3s ease forwards;
-        }
+        .announcement-content.show { display: block; animation: fadeInDown 0.3s ease forwards; }
 
-        /* ================= 分组容器与动画 ================= */
-        .category-group {
-            width: 100%;
-            margin-bottom: 20px;
-        }
-
+        /* 分组 */
+        .category-group { width: 100%; margin-bottom: 20px; }
         .category-title {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            cursor: pointer;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            display: flex; justify-content: center; align-items: center;
+            color: var(--category-text); font-size: 16px; font-weight: bold;
+            margin-bottom: 12px; cursor: pointer; text-shadow: var(--category-shadow);
             user-select: none;
         }
-        
-        .category-title .arrow {
-            font-size: 12px;
-            margin-left: 8px;
-            transition: transform 0.3s ease;
-        }
-        .category-title.collapsed .arrow {
-            transform: rotate(-90deg);
-        }
+        .category-title .arrow { font-size: 12px; margin-left: 8px; transition: transform 0.3s ease; }
+        .category-title.collapsed .arrow { transform: rotate(-90deg); }
 
         .link-list {
-            list-style: none;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 12px; 
+            list-style: none; width: 100%;
+            display: flex; flex-direction: column; gap: 12px; 
         }
-        .link-list.hidden {
-            display: none;
-        }
-        .link-list:not(.hidden) {
-            animation: fadeInDown 0.3s ease forwards;
-        }
+        .link-list.hidden { display: none; }
+        .link-list:not(.hidden) { animation: fadeInDown 0.3s ease forwards; }
 
-        /* ================= 核心：毛玻璃卡片 ================= */
+        /* 卡片 */
         .link-item a {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.20));
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1.5px solid rgba(255, 255, 255, 0.5);
-            border-radius: 50px; 
-            text-decoration: none;
-            color: #333;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            display: flex; align-items: center; padding: 15px;
+            background: linear-gradient(to right, var(--glass-bg), rgba(255, 255, 255, 0.2));
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1.5px solid var(--glass-border); border-radius: 50px; 
+            text-decoration: none; color: var(--text-color);
+            transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .link-item a:hover { background: var(--glass-bg-hover); transform: translateY(-2px); }
+        
+        body.dark-mode .link-item a {
+            background: linear-gradient(to right, var(--glass-bg), rgba(30, 30, 40, 0.3));
         }
 
-        .link-item a:hover {
-            background: linear-gradient(to right, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.5));
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-        }
-
-        /* 左侧图标容器 */
         .icon-box {
+            width: 45px; height: 45px; min-width: 45px; border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            display: flex; justify-content: center; align-items: center;
+            margin-right: 15px; font-size: 24px; overflow: hidden;
+        }
+        body.dark-mode .icon-box { background: rgba(255, 255, 255, 0.2); }
+        .icon-box img { width: 100%; height: 100%; object-fit: cover; }
+
+        .text-box {
+            flex-grow: 1; display: flex; flex-direction: column; text-align: center; padding: 0 5px; 
+        }
+        .link-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+        .link-desc { font-size: 13px; color: var(--text-desc-color); line-height: 1.4; }
+
+        /* 收藏按钮 */
+        .fav-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 20px;
+            color: rgba(150, 150, 150, 0.6);
+            cursor: pointer;
+            z-index: 10;
+            padding: 5px;
+            transition: transform 0.2s, color 0.2s;
+        }
+        .fav-btn.active { color: #ff4757; transform: translateY(-50%) scale(1.1); }
+        .fav-btn:active { transform: translateY(-50%) scale(0.8); }
+        
+        /* 留出右侧空间给收藏按钮 */
+        .text-box { padding-right: 30px; }
+        .spacer-box { display: none; }
+
+        /* 回到顶部按钮 */
+        #backToTop {
+            position: fixed;
+            bottom: 30px;
+            right: 20px;
             width: 45px;
             height: 45px;
-            min-width: 45px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.6);
+            background: var(--header-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1.5px solid var(--glass-border);
+            color: var(--text-color);
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-right: 15px;
-            font-size: 24px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            overflow: hidden;
-        }
-        .icon-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* 文字区域 */
-        .text-box {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            text-align: center;
-            /* 左右留一点点 padding，避免文字太长贴边 */
-            padding: 0 5px; 
-        }
-
-        .link-name {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .link-desc {
-            font-size: 13px;
-            color: #444;
-            line-height: 1.4;
-        }
-
-        /* 右侧隐形占位块：宽度和左侧图标+间距完全一样，保证文字绝对居中 */
-        .spacer-box {
-            width: 45px;
-            min-width: 45px;
-            margin-left: 15px; 
-            height: 1px; 
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
             visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
         }
+        #backToTop.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        #backToTop:hover { background: var(--glass-bg-hover); }
 
-        .loading {
-            text-align: center;
-            color: #fff;
-            text-shadow: 0 1px 3px rgba(0,0,0,0.2);
-        }
-
-        /* ================= 关键动画帧 ================= */
         @keyframes fadeInDown {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -274,6 +294,9 @@
 </head>
 <body>
 
+<!-- 夜间模式切换按钮 -->
+<div class="theme-toggle" id="themeToggle" title="切换日夜模式">🌙</div>
+
 <div class="container">
     <div class="header-avatar">
         <img src="img/mmexport1793734398403.jpg" alt="头像">
@@ -281,11 +304,10 @@
     <h1>api站点合集</h1>
     <div class="subtitle">各种站点持续更新中~</div>
 
-    <div class="search-container">
+    <!-- 吸顶区域 -->
+    <div class="sticky-header">
         <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜索站点名称或介绍...">
-    </div>
-
-    <div class="announcement-wrapper">
+        
         <div class="announcement-title" id="announcementBtn">
             <span>📢 站点公告</span>
             <span class="arrow">▼</span>
@@ -293,18 +315,57 @@
         <div class="announcement-content" id="announcementContent">
             欢迎来到 API 站点合集！<br>
             本页面所有内容均来自本人收集，试吃或签到有可能不准确，以实际情况为准。<br>
-            如有问题或需要更新链接，请联系本人。<br>
-            11.14新增：初恋，南北绿豆，漫聊，幸运熊，axo
+            如有问题或需要更新链接，请联系本人。
         </div>
     </div>
 
     <div id="mainContainer">
-        <div class="loading">加载中...</div>
+        <div class="loading" style="color:#fff; text-align:center;">加载中...</div>
     </div>
 </div>
 
+<!-- 回到顶部按钮 -->
+<div id="backToTop">↑</div>
+
 <script>
+    // ================= 1. 初始化与主题逻辑 =================
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    // 检查本地存储的主题
+    if (localStorage.getItem('theme') === 'dark') {
+        body.classList.add('dark-mode');
+        themeToggle.textContent = '☀️';
+    }
+
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) {
+            themeToggle.textContent = '☀️';
+            localStorage.setItem('theme', 'dark');
+        } else {
+            themeToggle.textContent = '🌙';
+            localStorage.setItem('theme', 'light');
+        }
+    });
+
+    // ================= 2. 回到顶部逻辑 =================
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ================= 3. 数据与收藏逻辑 =================
     let originalData = [];
+    // 从本地存储读取收藏的 URL 列表
+    let favorites = JSON.parse(localStorage.getItem('fav_links') || '[]');
 
     fetch('links.json')
         .then(response => response.json())
@@ -315,20 +376,35 @@
         })
         .catch(error => {
             console.error('Error:', error);
-            document.getElementById('mainContainer').innerHTML = '<div class="loading">数据加载失败，请检查 links.json 格式</div>';
+            document.getElementById('mainContainer').innerHTML = '<div class="loading">数据加载失败</div>';
         });
 
+    // 核心渲染函数
     function renderData(dataToRender) {
         const container = document.getElementById('mainContainer');
         container.innerHTML = ''; 
 
         if (dataToRender.length === 0) {
-            container.innerHTML = '<div class="loading" style="margin-top:20px;">没有找到匹配的链接~</div>';
+            container.innerHTML = '<div class="loading" style="color:#fff;">没有找到匹配的链接~</div>';
             return;
         }
 
+        // 处理收藏分组（如果是搜索状态，则打散显示）
+        const isSearching = document.getElementById('searchInput').value.trim() !== '';
+        let finalRenderData = [...dataToRender];
+
+        if (!isSearching) {
+            // 提取收藏的站点
+            const favItems = originalData.filter(item => favorites.includes(item.url));
+            if (favItems.length > 0) {
+                // 给收藏的站点打上特殊分类
+                const markedFavItems = favItems.map(item => ({...item, category: '⭐️ 我的收藏'}));
+                finalRenderData = [...markedFavItems, ...finalRenderData];
+            }
+        }
+
         const groupedData = {};
-        dataToRender.forEach(item => {
+        finalRenderData.forEach(item => {
             const cat = item.category || '未分类';
             if (!groupedData[cat]) { groupedData[cat] = []; }
             groupedData[cat].push(item);
@@ -338,8 +414,7 @@
             const groupDiv = document.createElement('div');
             groupDiv.className = 'category-group';
 
-            const isSearching = document.getElementById('searchInput').value.trim() !== '';
-            const isDefaultExpanded = isSearching || (category === '最新加入' || category === '小r优选');
+            const isDefaultExpanded = isSearching || (category === '最新加入' || category === '小r优选' || category === '⭐️ 我的收藏');
             
             const titleDiv = document.createElement('div');
             titleDiv.className = isDefaultExpanded ? 'category-title' : 'category-title collapsed';
@@ -361,6 +436,10 @@
                 
                 const formattedDesc = item.desc.replace(/\n/g, '<br>');
                 let iconHtml = item.icon && item.icon.startsWith('http') ? `<img src="${item.icon}" alt="icon">` : (item.icon || '🔗');
+                
+                // 判断是否已收藏
+                const isFav = favorites.includes(item.url);
+                const favIcon = isFav ? '❤️' : '♡';
 
                 li.innerHTML = `
                     <a href="${item.url}" target="_blank" rel="noopener noreferrer">
@@ -369,8 +448,8 @@
                             <span class="link-name">${item.name}</span>
                             <span class="link-desc">${formattedDesc}</span>
                         </div>
-                        <div class="spacer-box"></div> <!-- 隐形占位，保证文字绝对居中 -->
                     </a>
+                    <div class="fav-btn ${isFav ? 'active' : ''}" data-url="${item.url}">${favIcon}</div>
                 `;
                 ul.appendChild(li);
             });
@@ -379,8 +458,31 @@
             groupDiv.appendChild(ul);
             container.appendChild(groupDiv);
         }
+
+        // 绑定收藏按钮点击事件
+        document.querySelectorAll('.fav-btn').forEach(btn => {
+            btn.onclick = function(e) {
+                e.preventDefault(); // 阻止跳转
+                const url = this.getAttribute('data-url');
+                if (favorites.includes(url)) {
+                    favorites = favorites.filter(u => u !== url); // 取消收藏
+                    this.classList.remove('active');
+                    this.textContent = '♡';
+                } else {
+                    favorites.push(url); // 添加收藏
+                    this.classList.add('active');
+                    this.textContent = '❤️';
+                }
+                localStorage.setItem('fav_links', JSON.stringify(favorites)); // 存入本地
+                // 如果没在搜索，重新渲染以更新“我的收藏”分组
+                if (document.getElementById('searchInput').value.trim() === '') {
+                    renderData(originalData);
+                }
+            };
+        });
     }
 
+    // 搜索功能
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', function(e) {
         const keyword = e.target.value.toLowerCase().trim();
@@ -391,6 +493,7 @@
         renderData(filteredData);
     });
 
+    // 公告栏折叠
     function setupAnnouncement() {
         const annBtn = document.getElementById('announcementBtn');
         const annContent = document.getElementById('announcementContent');
