@@ -50,7 +50,7 @@
             transition: background 0.5s, color 0.3s;
         }
 
-        /* 夜间模式遮罩：让背景图变暗 */
+        /* 夜间模式遮罩 */
         body.dark-mode::before {
             content: "";
             position: fixed;
@@ -208,15 +208,21 @@
         .link-list.hidden { display: none; }
         .link-list:not(.hidden) { animation: fadeInDown 0.3s ease forwards; }
 
-        /* 卡片 */
+        /* ================= 核心：卡片布局重构 ================= */
+        .link-item {
+            position: relative; /* 让爱心可以绝对定位 */
+            width: 100%;
+        }
+        
         .link-item a {
-            display: flex; align-items: center; padding: 15px;
+            display: flex; align-items: center; 
+            /* 右侧留出 40px 给爱心 */
+            padding: 15px 40px 15px 15px; 
             background: linear-gradient(to right, var(--glass-bg), rgba(255, 255, 255, 0.2));
             backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             border: 1.5px solid var(--glass-border); border-radius: 50px; 
             text-decoration: none; color: var(--text-color);
             transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            position: relative;
         }
         .link-item a:hover { background: var(--glass-bg-hover); transform: translateY(-2px); }
         
@@ -234,12 +240,16 @@
         .icon-box img { width: 100%; height: 100%; object-fit: cover; }
 
         .text-box {
-            flex-grow: 1; display: flex; flex-direction: column; text-align: center; padding: 0 5px; 
+            flex-grow: 1; 
+            display: flex; flex-direction: column; 
+            text-align: center; 
+            /* 为了让文字在视觉上依然居中，我们靠左占位和右侧内边距来平衡 */
+            padding: 0 5px; 
         }
         .link-name { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
         .link-desc { font-size: 13px; color: var(--text-desc-color); line-height: 1.4; }
 
-        /* 收藏按钮 */
+        /* 收藏按钮 - 固定在卡片最右侧 */
         .fav-btn {
             position: absolute;
             right: 15px;
@@ -254,10 +264,6 @@
         }
         .fav-btn.active { color: #ff4757; transform: translateY(-50%) scale(1.1); }
         .fav-btn:active { transform: translateY(-50%) scale(0.8); }
-        
-        /* 留出右侧空间给收藏按钮 */
-        .text-box { padding-right: 30px; }
-        .spacer-box { display: none; }
 
         /* 回到顶部按钮 */
         #backToTop {
@@ -316,7 +322,7 @@
             欢迎来到 API 站点合集！<br>
             本页面所有内容均来自本人收集，试吃或签到有可能不准确，以实际情况为准。<br>
             如有问题或需要更新链接，请联系本人。<br>
-            11.14新增：初恋，幸运熊，axo，漫聊，南北绿豆
+            11.14新增：初恋，南北绿豆，幸运熊，漫聊，axo
         </div>
     </div>
 
@@ -329,11 +335,10 @@
 <div id="backToTop">↑</div>
 
 <script>
-    // ================= 1. 初始化与主题逻辑 =================
+    // ================= 1. 主题逻辑 =================
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
 
-    // 检查本地存储的主题
     if (localStorage.getItem('theme') === 'dark') {
         body.classList.add('dark-mode');
         themeToggle.textContent = '☀️';
@@ -350,7 +355,7 @@
         }
     });
 
-    // ================= 2. 回到顶部逻辑 =================
+    // ================= 2. 回到顶部 =================
     const backToTopBtn = document.getElementById('backToTop');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 300) {
@@ -363,9 +368,8 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // ================= 3. 数据与收藏逻辑 =================
+    // ================= 3. 数据与收藏 =================
     let originalData = [];
-    // 从本地存储读取收藏的 URL 列表
     let favorites = JSON.parse(localStorage.getItem('fav_links') || '[]');
 
     fetch('links.json')
@@ -380,7 +384,6 @@
             document.getElementById('mainContainer').innerHTML = '<div class="loading">数据加载失败</div>';
         });
 
-    // 核心渲染函数
     function renderData(dataToRender) {
         const container = document.getElementById('mainContainer');
         container.innerHTML = ''; 
@@ -390,15 +393,12 @@
             return;
         }
 
-        // 处理收藏分组（如果是搜索状态，则打散显示）
         const isSearching = document.getElementById('searchInput').value.trim() !== '';
         let finalRenderData = [...dataToRender];
 
         if (!isSearching) {
-            // 提取收藏的站点
             const favItems = originalData.filter(item => favorites.includes(item.url));
             if (favItems.length > 0) {
-                // 给收藏的站点打上特殊分类
                 const markedFavItems = favItems.map(item => ({...item, category: '⭐️ 我的收藏'}));
                 finalRenderData = [...markedFavItems, ...finalRenderData];
             }
@@ -438,10 +438,10 @@
                 const formattedDesc = item.desc.replace(/\n/g, '<br>');
                 let iconHtml = item.icon && item.icon.startsWith('http') ? `<img src="${item.icon}" alt="icon">` : (item.icon || '🔗');
                 
-                // 判断是否已收藏
                 const isFav = favorites.includes(item.url);
                 const favIcon = isFav ? '❤️' : '♡';
 
+                // 删除了右边的 spacer-box，把爱心直接写在 a 标签外面
                 li.innerHTML = `
                     <a href="${item.url}" target="_blank" rel="noopener noreferrer">
                         <div class="icon-box">${iconHtml}</div>
@@ -460,30 +460,28 @@
             container.appendChild(groupDiv);
         }
 
-        // 绑定收藏按钮点击事件
+        // 绑定收藏按钮
         document.querySelectorAll('.fav-btn').forEach(btn => {
             btn.onclick = function(e) {
-                e.preventDefault(); // 阻止跳转
+                e.preventDefault(); 
                 const url = this.getAttribute('data-url');
                 if (favorites.includes(url)) {
-                    favorites = favorites.filter(u => u !== url); // 取消收藏
+                    favorites = favorites.filter(u => u !== url);
                     this.classList.remove('active');
                     this.textContent = '♡';
                 } else {
-                    favorites.push(url); // 添加收藏
+                    favorites.push(url);
                     this.classList.add('active');
                     this.textContent = '❤️';
                 }
-                localStorage.setItem('fav_links', JSON.stringify(favorites)); // 存入本地
-                // 如果没在搜索，重新渲染以更新“我的收藏”分组
+                localStorage.setItem('fav_links', JSON.stringify(favorites));
                 if (document.getElementById('searchInput').value.trim() === '') {
-                    renderData(originalData);
+                    renderData(originalData); // 刷新列表
                 }
             };
         });
     }
 
-    // 搜索功能
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', function(e) {
         const keyword = e.target.value.toLowerCase().trim();
@@ -494,7 +492,6 @@
         renderData(filteredData);
     });
 
-    // 公告栏折叠
     function setupAnnouncement() {
         const annBtn = document.getElementById('announcementBtn');
         const annContent = document.getElementById('announcementContent');
