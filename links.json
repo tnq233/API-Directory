@@ -323,6 +323,48 @@
   },
   {
     "category": "无门槛签到",
+    "name": "小鲸ai",
+    "desc": "（0.1以内）",
+    "url": "https://open.xiaojingai.com/sign-up?aff=E2hK",
+    "icon": "🐳"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "link",
+    "desc": "（0.1以内）",
+    "url": "https://api.linkapi.ai/sign-up?aff=yt3u",
+    "icon": "🔗"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "青屿",
+    "desc": "（0.1以内）",
+    "url": "https://qingyuapi.com/sign-up?aff=DHw4",
+    "icon": "🏝️"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "棉云",
+    "desc": "（0.01以内）",
+    "url": "https://mianyunai.com/sign-up?aff=Lyn3",
+    "icon": "☁️"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "爱玩",
+    "desc": "（9左右）",
+    "url": "https://api.aiwanai.cc/sign-up?aff=oDrH",
+    "icon": "🎮"
+  },
+  {
+    "category": "无门槛签到",
+    "name": "大米饭",
+    "desc": "（0.1以内）",
+    "url": "https://damifan.xyz/sign-up?aff=jjkp",
+    "icon": "🍚"
+  },
+  {
+    "category": "无门槛签到",
     "name": "喵喵的AI中转",
     "desc": "（限时额度）",
     "url": "https://v2.aicode2api.cc/register?aff=YY5FZTUBGTSY",
@@ -653,7 +695,7 @@
   {
     "category": "无门槛签到",
     "name": "润航算力",
-    "desc": "（0-0.2）",
+    "desc": "（0.2以内）",
     "url": "https://raivip.com/register?aff=gzvJ",
     "icon": "🚀"
   },
@@ -791,6 +833,69 @@
     "icon": "🪨"
   },
   {
+    "category": "无门槛签到",
+    "name": "flowbee",
+    "desc": "（签到200积分左右）",
+    "url": "https://flowbee.top/sign-up?aff=KKqp",
+    "icon": "🐝"
+  },
+  {
+    "category": "无签到",
+    "name": "55",
+    "desc": "（无试吃）",
+    "url": "https://api.55.al/sign-up?aff=iLvB",
+    "icon": "5️⃣"
+  },
+  {
+    "category": "无签到",
+    "name": "compute",
+    "desc": "（试吃1）",
+    "url": "https://computetoken.ai/sign-up?aff=KKEe",
+    "icon": "💻"
+  },
+  {
+    "category": "无签到",
+    "name": "转转",
+    "desc": "（试吃6）",
+    "url": "https://api.uu6.top/sign-up?aff=13I3",
+    "icon": "🔄"
+  },
+  {
+    "category": "无签到",
+    "name": "甜橙派",
+    "desc": "（试吃2）",
+    "url": "https://i.orangepie.org/sign-up?aff=BXVw",
+    "icon": "🍊"
+  },
+  {
+    "category": "无签到",
+    "name": "蜜音ai",
+    "desc": "（有试吃）",
+    "url": "https://code.coolyeah.net/sign-up?aff=AMJq",
+    "icon": "🍯"
+  },
+  {
+    "category": "无签到",
+    "name": "猫次元",
+    "desc": "（试吃1）",
+    "url": "https://222650156.xyz/sign-up?aff=nN05",
+    "icon": "🐱"
+  },
+  {
+    "category": "无签到",
+    "name": "电子蝴蝶",
+    "desc": "（试吃6）",
+    "url": "https://api.ebutterfly.cc/sign-up?aff=GJ2K",
+    "icon": "🦋"
+  },
+  {
+    "category": "无签到",
+    "name": "茉莉酒馆",
+    "desc": "（无试吃）",
+    "url": "https://mollytavern.com/register?aff=6E6E9JY3MXRH",
+    "icon": "🍸"
+  },
+  {
     "category": "无签到",
     "name": "冻梨",
     "desc": "（0.1以内）",
@@ -803,6 +908,13 @@
     "desc": "（0.3左右）",
     "url": "https://changchunxu.xyz/sign-up?aff=rprs",
     "icon": "🌸"
+  },
+  {
+    "category": "无签到",
+    "name": "choosec",
+    "desc": "（试吃6）",
+    "url": "https://api.choosec.cn/sign-up?aff=0Xl6",
+    "icon": "🎯"
   },
   {
     "category": "无签到",
@@ -820,13 +932,6 @@
   },
   {
     "category": "无签到",
-    "name": "大米饭",
-    "desc": "（试吃2）",
-    "url": "https://damifan.xyz/sign-up?aff=jjkp",
-    "icon": "🍚"
-  },
-  {
-    "category": "无签到",
     "name": "哈基鱼",
     "desc": "（试吃1）",
     "url": "https://api.qwecc.icu/sign-up?aff=PDix",
@@ -841,24 +946,10 @@
   },
   {
     "category": "无签到",
-    "name": "choosec",
-    "desc": "（试吃6）",
-    "url": "https://api.choosec.cn/sign-up?aff=0Xl6",
-    "icon": "🎯"
-  },
-  {
-    "category": "无签到",
     "name": "芙卡卡",
     "desc": "（试吃200）",
     "url": "https://api.fuka.win/sign-up?aff=WUcJ",
     "icon": "💎"
-  },
-  {
-    "category": "无签到",
-    "name": "flowbee",
-    "desc": "（试吃0.6）",
-    "url": "https://flowbee.top/sign-up?aff=KKqp",
-    "icon": "🐝"
   },
   {
     "category": "无签到",
