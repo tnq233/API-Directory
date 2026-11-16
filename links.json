@@ -1,6 +1,20 @@
 [
   {
     "category": "最新加入",
+    "name": "maxdle",
+    "desc": "（试吃0.5，每日签到0.2-0.5，幸运奖励3）",
+    "url": "https://maxdle.com/register?aff=PNK6FEVVT5C5",
+    "icon": "🎲"
+  },
+  {
+    "category": "最新加入",
+    "name": "芋头饭",
+    "desc": "（试吃150，1：100）",
+    "url": "https://api.yutou.fun/sign-up?aff=9lfQ",
+    "icon": "🍚"
+  },
+  {
+    "category": "最新加入",
     "name": "初恋",
     "desc": "（试吃0.6，签到0.1-0.2）",
     "url": "https://api.hicode.me/sign-up?aff=t4zT",
