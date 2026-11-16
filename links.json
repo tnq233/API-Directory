@@ -120,13 +120,6 @@
   },
   {
     "category": "最新加入",
-    "name": "AnAn",
-    "desc": "（试吃0.5）",
-    "url": "https://api.waianan.com/sign-up?aff=v5eQ",
-    "icon": "🍩"
-  },
-  {
-    "category": "最新加入",
     "name": "rbubu",
     "desc": "（试吃0.5）",
     "url": "https://api.rbubu.com/sign-up?aff=T2w2",
@@ -141,13 +134,6 @@
   },
   {
     "category": "最新加入",
-    "name": "长春叙",
-    "desc": "（0.3左右）",
-    "url": "https://changchunxu.xyz/sign-up?aff=rprs",
-    "icon": "🌸"
-  },
-  {
-    "category": "最新加入",
     "name": "月栖",
     "desc": "（前日调用可签到）",
     "url": "https://yueqiai.top/sign-up?aff=ZYu2",
@@ -159,6 +145,20 @@
     "desc": "（试吃50，后续上签到，有抽奖）",
     "url": "https://eazydata.org/sign-up?aff=Kb21",
     "icon": "🎁"
+  },
+  {
+    "category": "小r优选",
+    "name": "AnAn",
+    "desc": "（试吃0.5）\n（❤️薄甲太子）",
+    "url": "https://api.waianan.com/sign-up?aff=v5eQ",
+    "icon": "🍩"
+  },
+  {
+    "category": "小r优选",
+    "name": "空悲切",
+    "desc": "（试吃2）\n（❤️特特价次kiro克）",
+    "url": "https://api.xn--lbr707ayot.com/sign-up?aff=H0gC",
+    "icon": "🥀"
   },
   {
     "category": "小r优选",
@@ -383,13 +383,6 @@
     "desc": "（0-0.2）",
     "url": "https://v-api.zeabur.app/sign-up?aff=QJQ1",
     "icon": "✌️"
-  },
-  {
-    "category": "无门槛签到",
-    "name": "冻梨",
-    "desc": "（0.1以内）",
-    "url": "https://api.dongli.work/sign-up?aff=axTy",
-    "icon": "🍐"
   },
   {
     "category": "无门槛签到",
@@ -796,6 +789,20 @@
     "desc": "（0.03左右）",
     "url": "https://stoneai.fun/sign-up?aff=g7kk",
     "icon": "🪨"
+  },
+  {
+    "category": "无签到",
+    "name": "冻梨",
+    "desc": "（0.1以内）",
+    "url": "https://api.dongli.work/sign-up?aff=axTy",
+    "icon": "🍐"
+  },
+  {
+    "category": "无签到",
+    "name": "长春叙",
+    "desc": "（0.3左右）",
+    "url": "https://changchunxu.xyz/sign-up?aff=rprs",
+    "icon": "🌸"
   },
   {
     "category": "无签到",
