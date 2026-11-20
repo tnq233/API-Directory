@@ -1,6 +1,20 @@
 [
   {
     "category": "最新加入",
+    "name": "猫薄荷",
+    "desc": "（试吃5，签到0.5-1.5）",
+    "url": "https://pr.ycore.buzz/sign-up?aff=3Svd",
+    "icon": "🌿"
+  },
+  {
+    "category": "最新加入",
+    "name": "云猫",
+    "desc": "（试吃4）",
+    "url": "https://api.ymzcc.com/sign-up?aff=YhGD",
+    "icon": "🐈"
+  },
+  {
+    "category": "最新加入",
     "name": "薯条",
     "desc": "（签到0.18，消费1.88后签到0.2）",
     "url": "https://leepdszz.top/sign-up?aff=kIvv",
