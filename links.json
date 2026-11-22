@@ -1,6 +1,34 @@
 [
   {
     "category": "最新加入",
+    "name": "神秘的酒馆",
+    "desc": "（试吃1，签到0-1）",
+    "url": "https://hb.dockerspeeds.asia/sign-up?aff=5JB9",
+    "icon": "🍻"
+  },
+  {
+    "category": "最新加入",
+    "name": "萌友",
+    "desc": "（试吃0.5）",
+    "url": "https://mengmenguu.top/sign-up?aff=6oTF",
+    "icon": "🧸"
+  },
+  {
+    "category": "最新加入",
+    "name": "咪咪喵喵",
+    "desc": "（无介绍）",
+    "url": "https://mimimiaomiao.cc/sign-up?aff=Iu9N",
+    "icon": "🐱"
+  },
+  {
+    "category": "最新加入",
+    "name": "忘忧",
+    "desc": "（试吃30）",
+    "url": "https://wy.aiwangyou.cc/sign-up?aff=zsYk",
+    "icon": "🍷"
+  },
+  {
+    "category": "最新加入",
     "name": "猫薄荷",
     "desc": "（试吃5，签到0.5-1.5）",
     "url": "https://pr.ycore.buzz/sign-up?aff=3Svd",
@@ -169,17 +197,17 @@
   },
   {
     "category": "最新加入",
-    "name": "月栖",
-    "desc": "（前日调用可签到）",
-    "url": "https://yueqiai.top/sign-up?aff=ZYu2",
-    "icon": "🌙"
-  },
-  {
-    "category": "最新加入",
     "name": "EazyData API",
     "desc": "（试吃50，后续上签到，有抽奖）",
     "url": "https://eazydata.org/sign-up?aff=Kb21",
     "icon": "🎁"
+  },
+  {
+    "category": "小r优选",
+    "name": "小羊relay",
+    "desc": "（试吃2）\n（❤️gemini-4-argon-tj）",
+    "url": "https://roleai.dx.com.ai/?ref=dlJt",
+    "icon": "🐏"
   },
   {
     "category": "小r优选",
