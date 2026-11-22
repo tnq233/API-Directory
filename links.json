@@ -1,6 +1,20 @@
 [
   {
     "category": "最新加入",
+    "name": "炉边酒馆",
+    "desc": "（试吃12，签到0.2）\n（全模型2分，太子两分）",
+    "url": "https://pub.els.edu.rs/sign-up?aff=IUlp",
+    "icon": "🔥"
+  },
+  {
+    "category": "最新加入",
+    "name": "芝士",
+    "desc": "（试吃100，比例1:10）",
+    "url": "https://zh1shi.top/register?aff=EEL3TRUZFXAJ",
+    "icon": "🧀"
+  },
+  {
+    "category": "最新加入",
     "name": "神秘的酒馆",
     "desc": "（试吃1，签到0-1）",
     "url": "https://hb.dockerspeeds.asia/sign-up?aff=5JB9",
@@ -201,6 +215,13 @@
     "desc": "（试吃50，后续上签到，有抽奖）",
     "url": "https://eazydata.org/sign-up?aff=Kb21",
     "icon": "🎁"
+  },
+  {
+    "category": "小r优选",
+    "name": "一枝春",
+    "desc": "（进群绑定试吃2）\n❤️3.8f",
+    "url": "https://yizhichun.online/register?aff=5SZGJZRFRQJ4",
+    "icon": "🌱"
   },
   {
     "category": "小r优选",
