@@ -1,6 +1,34 @@
 [
   {
     "category": "最新加入",
+    "name": "ainzy",
+    "desc": "（试吃0.1，充值可签到）",
+    "url": "https://hk.ainzy.net/sign-up?aff=dtcb",
+    "icon": "🌐"
+  },
+  {
+    "category": "最新加入",
+    "name": "51ai",
+    "desc": "（试吃3）",
+    "url": "https://51ai.io/register?aff=JBMCVPMHLMNX",
+    "icon": "5️⃣"
+  },
+  {
+    "category": "最新加入",
+    "name": "萨摩耶耶",
+    "desc": "（试吃1，签到0.02递增）",
+    "url": "https://samoyeye.com/sign-up?aff=vZwj",
+    "icon": "🐶"
+  },
+  {
+    "category": "最新加入",
+    "name": "果酱",
+    "desc": "（试吃1）",
+    "url": "https://api.jammy.one/sign-up?aff=c8V7",
+    "icon": "🍓"
+  },
+  {
+    "category": "最新加入",
     "name": "炉边酒馆",
     "desc": "（试吃12，签到0.2）\n（全模型2分，太子两分）",
     "url": "https://pub.els.edu.rs/sign-up?aff=IUlp",
