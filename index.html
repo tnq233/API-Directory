@@ -123,7 +123,6 @@
         }
         .announcement-content.show { display: block; animation: fadeInDown 0.3s ease forwards; }
 
-        /* ================= 新增：固定置顶卡片 ================= */
         .fixed-link-container {
             width: 100%;
             margin-bottom: 20px;
@@ -142,11 +141,9 @@
             transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 215, 0, 0.2);
         }
         .fixed-link-card .icon-box { background: rgba(255, 255, 255, 0.8); font-size: 22px; }
-        /* 给置顶卡片的名字加一点金色高光 */
         .fixed-link-card .link-name { color: #d4af37; font-weight: bold; text-shadow: 0 1px 1px rgba(255,255,255,0.5); }
         body.dark-mode .fixed-link-card .link-name { color: #ffd700; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
 
-        /* ================= 分组 ================= */
         .category-group { width: 100%; margin-bottom: 20px; }
         .category-title {
             display: flex; justify-content: center; align-items: center; color: var(--category-text);
@@ -175,6 +172,16 @@
         }
         .link-item a:hover { background: var(--glass-bg-hover); transform: translateY(-2px); }
         body.dark-mode .link-item a { background: linear-gradient(to right, var(--glass-bg), rgba(30, 30, 40, 0.3)); }
+
+        /* 避雷警告卡片样式 (供用户选择是否隐藏) */
+        .link-item.warned a {
+            border-color: rgba(255, 71, 87, 0.5);
+            background: linear-gradient(to right, rgba(255, 71, 87, 0.1), rgba(255, 255, 255, 0.1));
+        }
+        .warn-badge {
+            font-size: 11px; background: #ff4757; color: white; padding: 2px 6px; 
+            border-radius: 4px; margin-left: 5px; vertical-align: middle;
+        }
 
         .icon-box {
             width: 45px; height: 45px; min-width: 45px; border-radius: 50%;
@@ -226,6 +233,16 @@
         }
         input[type=range]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: rgba(255,255,255,0.4); border-radius: 2px; }
 
+        /* 新增：开关样式 */
+        .toggle-group { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 10px 0; border-top: 1px solid var(--glass-border); }
+        .toggle-group span { font-size: 14px; color: var(--text-color); font-weight: 600; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider-switch { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
+        .slider-switch:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider-switch { background-color: #ff4757; }
+        input:checked + .slider-switch:before { transform: translateX(20px); }
+
         .modal-btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 15px;}
         .modal-btn {
             padding: 12px; border-radius: 12px; border: 1.5px solid var(--glass-border);
@@ -251,7 +268,7 @@
 
 <div class="modal-overlay" id="bgModal">
     <div class="modal-box">
-        <h3>⚙️ 壁纸设置</h3>
+        <h3>⚙️ 壁纸与偏好设置</h3>
         <div class="slider-group">
             <label>背景模糊度: <span id="blurVal">0</span>px</label>
             <input type="range" id="blurSlider" min="0" max="15" value="0" step="1">
@@ -260,6 +277,16 @@
             <label>背景亮度: <span id="brightVal">100</span>%</label>
             <input type="range" id="brightSlider" min="20" max="100" value="100" step="10">
         </div>
+        
+        <!-- 新增：过滤避雷开关 -->
+        <div class="toggle-group">
+            <span>🛡️ 隐藏警示/避雷站点</span>
+            <label class="switch">
+                <input type="checkbox" id="hideWarnToggle">
+                <span class="slider-switch"></span>
+            </label>
+        </div>
+
         <div class="modal-btn-group">
             <button class="modal-btn" id="uploadBtn">📁 上传自定义图片</button>
             <button class="modal-btn" id="resetBgBtn">🔄 恢复默认壁纸</button>
@@ -276,7 +303,6 @@
     <h1>api站点合集</h1>
     <div class="subtitle" id="typewriter"></div>
 
-    <!-- 吸顶区域：搜索 + 公告 -->
     <div class="sticky-header">
         <div style="position: relative;">
             <input type="text" id="searchInput" class="search-box" placeholder="🔍 搜索站点名称或介绍...">
@@ -292,12 +318,12 @@
             本页面所有内容均来自本人收集，试吃或签到有可能不准确，以实际情况为准。<br>
             如有问题或需要更新链接，请联系本人。<br>
             有的站点服务器在海外，需要开梯子，有需求可从下方注册。<br>
+            新增避雷功能，点开设置避雷功能可隐藏部分瓜站</br>
             新增收藏功能，点击链接右侧空心按钮即可收藏站点，在我的收藏置顶分组插件。<br>
             11.23新增：一枝春，芝士，炉边酒馆，ainzy，51ai，萨摩耶耶，果酱
         </div>
     </div>
 
-    <!-- ================= 新增：固定在公告栏下方的机场链接 ================= -->
     <div class="fixed-link-container">
         <a href="https://gw-2.smjc2.com/#/register?code=0hNRTWFS" target="_blank" rel="noopener noreferrer" class="fixed-link-card">
             <div class="icon-box">✈️</div>
@@ -323,11 +349,13 @@
     const brightSlider = document.getElementById('brightSlider');
     const bgModal = document.getElementById('bgModal');
     const bgLayer = document.getElementById('bg-layer');
+    const hideWarnToggle = document.getElementById('hideWarnToggle');
 
     const savedTheme = localStorage.getItem('theme');
     const savedBg = localStorage.getItem('custom_bg');
     const savedBlur = localStorage.getItem('bg_blur') || '0';
     const savedBright = localStorage.getItem('bg_bright') || '100';
+    const hideWarn = localStorage.getItem('hide_warn') === 'true';
 
     if (savedTheme === 'dark') { body.classList.add('dark-mode'); themeToggle.textContent = '☀️'; }
     if (savedBg) { bgLayer.style.backgroundImage = `url('${savedBg}')`; }
@@ -335,6 +363,7 @@
     brightSlider.value = savedBright; document.getElementById('brightVal').textContent = savedBright;
     body.style.setProperty('--bg-blur', savedBlur + 'px');
     body.style.setProperty('--bg-brightness', savedBright + '%');
+    hideWarnToggle.checked = hideWarn; // 初始化开关状态
 
     let sliderTimer;
     function updateFilter(type, val) {
@@ -347,6 +376,12 @@
 
     blurSlider.addEventListener('input', e => { document.getElementById('blurVal').textContent = e.target.value; updateFilter('blur', e.target.value); });
     brightSlider.addEventListener('input', e => { document.getElementById('brightVal').textContent = e.target.value; updateFilter('bright', e.target.value); });
+
+    // 监听过滤开关
+    hideWarnToggle.addEventListener('change', (e) => {
+        localStorage.setItem('hide_warn', e.target.checked);
+        renderData(originalData); // 重新渲染
+    });
 
     themeToggle.addEventListener('click', () => {
         body.classList.toggle('dark-mode');
@@ -533,13 +568,24 @@
     function renderData(dataToRender) {
         const container = document.getElementById('mainContainer');
         container.innerHTML = ''; 
-        if (dataToRender.length === 0) { container.innerHTML = '<div class="loading" style="color:#fff;">没有找到匹配的链接~</div>'; return; }
+        
+        // 过滤隐藏的避雷站点
+        const isHideWarn = hideWarnToggle.checked;
+        let filteredData = [...dataToRender];
+        if (isHideWarn) {
+            filteredData = filteredData.filter(item => !item.warn);
+        }
+
+        if (filteredData.length === 0) { 
+            container.innerHTML = '<div class="loading" style="color:#fff;">没有找到匹配的链接~</div>'; 
+            return; 
+        }
 
         const isSearching = document.getElementById('searchInput').value.trim() !== '';
-        let finalRenderData = [...dataToRender];
+        let finalRenderData = [...filteredData];
 
         if (!isSearching) {
-            const favItems = originalData.filter(item => favorites.includes(item.url));
+            const favItems = originalData.filter(item => favorites.includes(item.url) && (!isHideWarn || !item.warn));
             if (favItems.length > 0) {
                 finalRenderData = [...favItems.map(item => ({...item, category: '⭐️ 我的收藏'})), ...finalRenderData];
             }
@@ -577,6 +623,7 @@
             groupedData[category].forEach(item => {
                 const li = document.createElement('li');
                 li.className = 'link-item';
+                if (item.warn) li.classList.add('warned'); // 如果是避雷站点，给卡片加个特殊样式
                 li.style.animationDelay = `${globalIndex * 0.02}s`;
                 globalIndex++;
 
@@ -584,11 +631,14 @@
                 let iconHtml = item.icon && item.icon.startsWith('http') ? `<img src="${item.icon}" alt="icon" loading="lazy">` : (item.icon || '🔗');
                 const isFav = favorites.includes(item.url);
                 
+                // 如果带有 warn 标记，在名字后面显示一个红色的警告标签
+                const warnBadge = item.warn ? '<span class="warn-badge">⚠️ 避雷</span>' : '';
+
                 li.innerHTML = `
                     <a href="${item.url}" target="_blank" rel="noopener noreferrer">
                         <div class="icon-box">${iconHtml}</div>
                         <div class="text-box">
-                            <span class="link-name">${item.name}</span>
+                            <span class="link-name">${item.name} ${warnBadge}</span>
                             <span class="link-desc">${formattedDesc}</span>
                         </div>
                     </a>
