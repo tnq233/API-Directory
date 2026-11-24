@@ -1,6 +1,27 @@
 [
   {
     "category": "最新加入",
+    "name": "柯基邮局",
+    "desc": "（试吃2.5，有签到0-2之间）",
+    "url": "https://kejiyouju.com/sign-up?aff=i2AZ",
+    "icon": "🐶"
+  },
+  {
+    "category": "最新加入",
+    "name": "双子星",
+    "desc": "（试吃30，1:10，签到5次数）",
+    "url": "https://www.onemodel8.com/register?invite=71005695",
+    "icon": "🌟"
+  },
+  {
+    "category": "最新加入",
+    "name": "初雪",
+    "desc": "（试吃2.5，签到0.5左右）",
+    "url": "https://thefirstsnow.top/sign-up?aff=wQZr",
+    "icon": "❄️"
+  },
+  {
+    "category": "最新加入",
     "name": "ainzy",
     "desc": "（试吃0.1，充值可签到）",
     "url": "https://hk.ainzy.net/sign-up?aff=dtcb",
@@ -32,8 +53,7 @@
     "name": "炉边酒馆",
     "desc": "（试吃12，签到0.2）\n（全模型2分，太子两分）",
     "url": "https://pub.els.edu.rs/sign-up?aff=IUlp",
-    "icon": "🔥",
-    "warn": true
+    "icon": "🔥"
   },
   {
     "category": "最新加入",
@@ -54,13 +74,12 @@
     "name": "萌友",
     "desc": "（试吃0.5）",
     "url": "https://mengmenguu.top/sign-up?aff=6oTF",
-    "icon": "🧸",
-    "warn": true
+    "icon": "🧸"
   },
   {
     "category": "最新加入",
     "name": "咪咪喵喵",
-    "desc": "（无介绍）",
+    "desc": "（试吃1，前日调用10次可签到）",
     "url": "https://mimimiaomiao.cc/sign-up?aff=Iu9N",
     "icon": "🐱"
   },
