@@ -16,9 +16,10 @@
   {
     "category": "最新加入",
     "name": "叽歪歪",
-    "desc": "（试吃2.5，签到0.25-0.3）",
+    "desc": "（试吃0.85，签到0.1左右）",
     "url": "https://open.jihh985.cc/register?aff=C8oF",
-    "icon": "🐣"
+    "icon": "🐣",
+    "warn": true
   },
   {
     "category": "最新加入",
