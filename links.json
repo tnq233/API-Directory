@@ -16,10 +16,10 @@
   {
     "category": "最新加入",
     "name": "叽歪歪",
-    "desc": "（试吃2.5，签到0.25-0.3）",
+    "desc": "（试吃0.85，调用1次/充5r可签到0.1左右）",
     "url": "https://open.jihh985.cc/register?aff=C8oF",
-    "icon": "🐣"，
-    "warn":true
+    "icon": "🐣",
+    "warn": true
   },
   {
     "category": "最新加入",
@@ -186,7 +186,7 @@
     "category": "最新加入",
     "name": "银杏",
     "desc": "（试吃6+进群5）\n全按量计费",
-    "url": "https://svip.katioai.com/sign-up?aff=aDpC",
+    "url": "https://open.taikoapi.com/sign-up?aff=aDpC",
     "icon": "🍂"
   },
   {
