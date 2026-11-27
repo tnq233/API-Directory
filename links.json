@@ -2,7 +2,7 @@
   {
     "category": "最新加入",
     "name": "双子星",
-    "desc": "（试吃30，1:10，签到5次数）",
+    "desc": "（试吃10，1:10，签到5次数）",
     "url": "https://www.onemodel8.com/register?invite=71005695",
     "icon": "🌟"
   },
@@ -18,7 +18,8 @@
     "name": "叽歪歪",
     "desc": "（试吃2.5，签到0.25-0.3）",
     "url": "https://open.jihh985.cc/register?aff=C8oF",
-    "icon": "🐣"
+    "icon": "🐣"，
+    "warn":true
   },
   {
     "category": "最新加入",
@@ -178,7 +179,7 @@
     "category": "最新加入",
     "name": "幸运熊",
     "desc": "（试吃2，签到0.1-0.4）",
-    "url": "https://lucky-bear.asia/sign-up?aff=c2k0",
+    "url": "https://lucky-bear.asia/sign-up?aff=6xty",
     "icon": "🐻"
   },
   {
@@ -255,7 +256,7 @@
   {
     "category": "最新加入",
     "name": "rbubu",
-    "desc": "（试吃0.5）",
+    "desc": "（试吃0.2）",
     "url": "https://api.rbubu.com/sign-up?aff=T2w2",
     "icon": "🧁"
   },
