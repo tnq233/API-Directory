@@ -1,6 +1,27 @@
 [
   {
     "category": "最新加入",
+    "name": "荔枝",
+    "desc": "（试吃2）",
+    "url": "https://cdn.lizhiapi.sbs/sign-up?aff=zJll",
+    "icon": "🍒"
+  },
+  {
+    "category": "最新加入",
+    "name": "大胃王",
+    "desc": "（签到0.1以内）",
+    "url": "https://bigeater.art/sign-up?aff=Q2h7",
+    "icon": "🍔"
+  },
+  {
+    "category": "最新加入",
+    "name": "ccccc",
+    "desc": "（试吃1）",
+    "url": "https://dzhsmartai.com/register?aff=G7E3VE2FQW6U",
+    "icon": "🇨"
+  },
+  {
+    "category": "最新加入",
     "name": "良心",
     "desc": "（进群试吃1）\n（价美物廉，克0.04/次，4a0.025/次）",
     "url": "https://liangxinapi.top/sign-up?aff=Czoo",
@@ -94,7 +115,7 @@
   {
     "category": "最新加入",
     "name": "神秘的酒馆",
-    "desc": "（试吃1，签到0-1）",
+    "desc": "（充值可解锁签到）",
     "url": "https://hb.dockerspeeds.asia/sign-up?aff=5JB9",
     "icon": "🍻"
   },
@@ -583,13 +604,6 @@
     "desc": "（0.01）",
     "url": "https://www.freezapi.eu.cc/sign-up?aff=ZH5y",
     "icon": "🧊"
-  },
-  {
-    "category": "无门槛签到",
-    "name": "V",
-    "desc": "（0-0.2）",
-    "url": "https://v-api.zeabur.app/sign-up?aff=QJQ1",
-    "icon": "✌️"
   },
   {
     "category": "无门槛签到",
@@ -1101,13 +1115,6 @@
     "desc": "（试吃1）",
     "url": "https://api.qwecc.icu/sign-up?aff=PDix",
     "icon": "🐟"
-  },
-  {
-    "category": "无签到",
-    "name": "糯米兔",
-    "desc": "（试吃0.5）",
-    "url": "https://api.seerss.xyz/register?aff=WRsP",
-    "icon": "🐰"
   },
   {
     "category": "无签到",
